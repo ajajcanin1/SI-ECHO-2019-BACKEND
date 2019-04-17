@@ -8,8 +8,8 @@ public class Kabinet {
     private int idKabinet;
     private Integer kapacitet;
     private String namjena;
-    private List<PredmetKabinet> predmeti;
     private List<Raspored> termini;
+    private List<Predmet> predmeti;
 
     @Id
     @Column(name = "idKabinet")
@@ -64,20 +64,21 @@ public class Kabinet {
     }
 
     @OneToMany(mappedBy = "kabinet")
-    public List<PredmetKabinet> getPredmeti() {
-        return predmeti;
-    }
-
-    public void setPredmeti(List<PredmetKabinet> predmeti) {
-        this.predmeti = predmeti;
-    }
-
-    @OneToMany(mappedBy = "kabinet")
     public List<Raspored> getTermini() {
         return termini;
     }
 
     public void setTermini(List<Raspored> termini) {
         this.termini = termini;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "predmet_kabinet", catalog = "", schema = "TYQcLL35gV", joinColumns = @JoinColumn(name = "idKabinet", referencedColumnName = "idKabinet"), inverseJoinColumns = @JoinColumn(name = "idPredmet", referencedColumnName = "id"))
+    public List<Predmet> getPredmeti() {
+        return predmeti;
+    }
+
+    public void setPredmeti(List<Predmet> predmeti) {
+        this.predmeti = predmeti;
     }
 }

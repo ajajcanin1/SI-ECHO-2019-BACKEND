@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import javax.persistence.criteria.*;
+
 
 public interface KorisnikRepository extends PagingAndSortingRepository<Korisnik, Integer> {
     Page<Korisnik> findAll (Specification<Korisnik> spec, Pageable pageable);

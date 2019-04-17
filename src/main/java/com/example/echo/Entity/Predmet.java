@@ -12,7 +12,7 @@ public class Predmet {
     private int brojVjezbi;
     private String opis;
     private List<GrupaTermina> grupe;
-    private List<PredmetKabinet> kabineti;
+    private List<Kabinet> kabineti;
 
     @Id
     @Column(name = "id")
@@ -111,12 +111,12 @@ public class Predmet {
         this.grupe = grupe;
     }
 
-    @OneToMany(mappedBy = "predmet")
-    public List<PredmetKabinet> getKabineti() {
+    @ManyToMany(mappedBy = "predmeti")
+    public List<Kabinet> getKabineti() {
         return kabineti;
     }
 
-    public void setKabineti(List<PredmetKabinet> kabineti) {
+    public void setKabineti(List<Kabinet> kabineti) {
         this.kabineti = kabineti;
     }
 }
