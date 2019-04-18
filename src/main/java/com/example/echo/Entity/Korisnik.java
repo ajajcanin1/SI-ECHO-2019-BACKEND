@@ -1,5 +1,7 @@
 package com.example.echo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Arrays;
@@ -32,6 +34,7 @@ public class Korisnik {
     private String titula;
     private List<GrupaTermina> grupe;
     private List<ZeljeniTermin> zeljeniTermini;
+    private Uloga uloga;
 
     @Id
     @Column(name = "id")
@@ -346,5 +349,16 @@ public class Korisnik {
 
     public void setZeljeniTermini(List<ZeljeniTermin> zeljeniTermini) {
         this.zeljeniTermini = zeljeniTermini;
+    }
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "idUloga", referencedColumnName = "idUloga", nullable = false)
+    public Uloga getUloga() {
+        return uloga;
+    }
+
+    public void setUloga(Uloga uloga) {
+        this.uloga = uloga;
     }
 }
