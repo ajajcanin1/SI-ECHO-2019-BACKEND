@@ -52,30 +52,6 @@ public class Raspored {
         this.tipNastave = tipNastave;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Raspored raspored = (Raspored) o;
-
-        if (idTermin != raspored.idTermin) return false;
-        if (danUsedmici != null ? !danUsedmici.equals(raspored.danUsedmici) : raspored.danUsedmici != null)
-            return false;
-        if (vrijeme != null ? !vrijeme.equals(raspored.vrijeme) : raspored.vrijeme != null) return false;
-        if (tipNastave != null ? !tipNastave.equals(raspored.tipNastave) : raspored.tipNastave != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idTermin;
-        result = 31 * result + (danUsedmici != null ? danUsedmici.hashCode() : 0);
-        result = 31 * result + (vrijeme != null ? vrijeme.hashCode() : 0);
-        result = 31 * result + (tipNastave != null ? tipNastave.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
     @JoinColumn(name = "idKabinet", referencedColumnName = "idKabinet", nullable = false)

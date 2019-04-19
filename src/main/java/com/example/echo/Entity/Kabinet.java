@@ -41,27 +41,6 @@ public class Kabinet {
         this.namjena = namjena;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Kabinet kabinet = (Kabinet) o;
-
-        if (idKabinet != kabinet.idKabinet) return false;
-        if (kapacitet != null ? !kapacitet.equals(kabinet.kapacitet) : kabinet.kapacitet != null) return false;
-        if (namjena != null ? !namjena.equals(kabinet.namjena) : kabinet.namjena != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idKabinet;
-        result = 31 * result + (kapacitet != null ? kapacitet.hashCode() : 0);
-        result = 31 * result + (namjena != null ? namjena.hashCode() : 0);
-        return result;
-    }
 
     @OneToMany(mappedBy = "kabinet")
     public List<Raspored> getTermini() {

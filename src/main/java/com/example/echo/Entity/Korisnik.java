@@ -1,6 +1,7 @@
 package com.example.echo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -266,72 +267,6 @@ public class Korisnik {
         this.titula = titula;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Korisnik korisnik = (Korisnik) o;
-
-        if (id != korisnik.id) return false;
-        if (ime != null ? !ime.equals(korisnik.ime) : korisnik.ime != null) return false;
-        if (prezime != null ? !prezime.equals(korisnik.prezime) : korisnik.prezime != null) return false;
-        if (datumRodjenja != null ? !datumRodjenja.equals(korisnik.datumRodjenja) : korisnik.datumRodjenja != null)
-            return false;
-        if (jmbg != null ? !jmbg.equals(korisnik.jmbg) : korisnik.jmbg != null) return false;
-        if (email != null ? !email.equals(korisnik.email) : korisnik.email != null) return false;
-        if (mjestoRodjenja != null ? !mjestoRodjenja.equals(korisnik.mjestoRodjenja) : korisnik.mjestoRodjenja != null)
-            return false;
-        if (kanton != null ? !kanton.equals(korisnik.kanton) : korisnik.kanton != null) return false;
-        if (drzavljanstvo != null ? !drzavljanstvo.equals(korisnik.drzavljanstvo) : korisnik.drzavljanstvo != null)
-            return false;
-        if (telefon != null ? !telefon.equals(korisnik.telefon) : korisnik.telefon != null) return false;
-        if (spol != null ? !spol.equals(korisnik.spol) : korisnik.spol != null) return false;
-        if (imePrezimeMajke != null ? !imePrezimeMajke.equals(korisnik.imePrezimeMajke) : korisnik.imePrezimeMajke != null)
-            return false;
-        if (imePrezimeOca != null ? !imePrezimeOca.equals(korisnik.imePrezimeOca) : korisnik.imePrezimeOca != null)
-            return false;
-        if (adresa != null ? !adresa.equals(korisnik.adresa) : korisnik.adresa != null) return false;
-        if (username != null ? !username.equals(korisnik.username) : korisnik.username != null) return false;
-        if (password != null ? !password.equals(korisnik.password) : korisnik.password != null) return false;
-        if (linkedin != null ? !linkedin.equals(korisnik.linkedin) : korisnik.linkedin != null) return false;
-        if (website != null ? !website.equals(korisnik.website) : korisnik.website != null) return false;
-        if (!Arrays.equals(fotografija, korisnik.fotografija)) return false;
-        if (indeks != null ? !indeks.equals(korisnik.indeks) : korisnik.indeks != null) return false;
-        if (ciklus != null ? !ciklus.equals(korisnik.ciklus) : korisnik.ciklus != null) return false;
-        if (semestar != null ? !semestar.equals(korisnik.semestar) : korisnik.semestar != null) return false;
-        if (titula != null ? !titula.equals(korisnik.titula) : korisnik.titula != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (ime != null ? ime.hashCode() : 0);
-        result = 31 * result + (prezime != null ? prezime.hashCode() : 0);
-        result = 31 * result + (datumRodjenja != null ? datumRodjenja.hashCode() : 0);
-        result = 31 * result + (jmbg != null ? jmbg.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (mjestoRodjenja != null ? mjestoRodjenja.hashCode() : 0);
-        result = 31 * result + (kanton != null ? kanton.hashCode() : 0);
-        result = 31 * result + (drzavljanstvo != null ? drzavljanstvo.hashCode() : 0);
-        result = 31 * result + (telefon != null ? telefon.hashCode() : 0);
-        result = 31 * result + (spol != null ? spol.hashCode() : 0);
-        result = 31 * result + (imePrezimeMajke != null ? imePrezimeMajke.hashCode() : 0);
-        result = 31 * result + (imePrezimeOca != null ? imePrezimeOca.hashCode() : 0);
-        result = 31 * result + (adresa != null ? adresa.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (linkedin != null ? linkedin.hashCode() : 0);
-        result = 31 * result + (website != null ? website.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(fotografija);
-        result = 31 * result + (indeks != null ? indeks.hashCode() : 0);
-        result = 31 * result + (ciklus != null ? ciklus.hashCode() : 0);
-        result = 31 * result + (semestar != null ? semestar.hashCode() : 0);
-        result = 31 * result + (titula != null ? titula.hashCode() : 0);
-        return result;
-    }
 
     @OneToMany(mappedBy = "predavac")
     public List<GrupaTermina> getGrupe() {
@@ -342,6 +277,7 @@ public class Korisnik {
         this.grupe = grupe;
     }
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "predavac")
     public List<ZeljeniTermin> getZeljeniTermini() {
         return zeljeniTermini;
@@ -351,7 +287,7 @@ public class Korisnik {
         this.zeljeniTermini = zeljeniTermini;
     }
 
-    @JsonIgnore
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "idUloga", referencedColumnName = "idUloga", nullable = false)
     public Uloga getUloga() {

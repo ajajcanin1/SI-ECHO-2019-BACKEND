@@ -1,5 +1,7 @@
 package com.example.echo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,26 +31,6 @@ public class GrupaTermina {
 
     public void setNaziv(String naziv) {
         this.naziv = naziv;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        GrupaTermina that = (GrupaTermina) o;
-
-        if (idGrupaTermina != that.idGrupaTermina) return false;
-        if (naziv != null ? !naziv.equals(that.naziv) : that.naziv != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idGrupaTermina;
-        result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
-        return result;
     }
 
     @ManyToOne

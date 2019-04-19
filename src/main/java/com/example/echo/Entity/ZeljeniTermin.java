@@ -1,5 +1,8 @@
 package com.example.echo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -51,30 +54,7 @@ public class ZeljeniTermin {
         this.vrijeme = vrijeme;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ZeljeniTermin that = (ZeljeniTermin) o;
-
-        if (idZeljeniTermin != that.idZeljeniTermin) return false;
-        if (idKabinet != null ? !idKabinet.equals(that.idKabinet) : that.idKabinet != null) return false;
-        if (danUSedmici != null ? !danUSedmici.equals(that.danUSedmici) : that.danUSedmici != null) return false;
-        if (vrijeme != null ? !vrijeme.equals(that.vrijeme) : that.vrijeme != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idZeljeniTermin;
-        result = 31 * result + (idKabinet != null ? idKabinet.hashCode() : 0);
-        result = 31 * result + (danUSedmici != null ? danUSedmici.hashCode() : 0);
-        result = 31 * result + (vrijeme != null ? vrijeme.hashCode() : 0);
-        return result;
-    }
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "idPredavac", referencedColumnName = "id")
     public Korisnik getPredavac() {

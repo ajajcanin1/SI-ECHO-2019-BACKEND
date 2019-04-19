@@ -1,5 +1,7 @@
 package com.example.echo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -74,33 +76,6 @@ public class Predmet {
         this.opis = opis;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Predmet predmet = (Predmet) o;
-
-        if (id != predmet.id) return false;
-        if (ects != predmet.ects) return false;
-        if (brojPredavanja != predmet.brojPredavanja) return false;
-        if (brojVjezbi != predmet.brojVjezbi) return false;
-        if (naziv != null ? !naziv.equals(predmet.naziv) : predmet.naziv != null) return false;
-        if (opis != null ? !opis.equals(predmet.opis) : predmet.opis != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
-        result = 31 * result + ects;
-        result = 31 * result + brojPredavanja;
-        result = 31 * result + brojVjezbi;
-        result = 31 * result + (opis != null ? opis.hashCode() : 0);
-        return result;
-    }
 
     @OneToMany(mappedBy = "predmet")
     public List<GrupaTermina> getGrupe() {

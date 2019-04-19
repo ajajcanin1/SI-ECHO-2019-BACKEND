@@ -1,5 +1,6 @@
 package com.example.echo.Controller;
 
+import com.example.echo.DTO.KorisnikDTO;
 import com.example.echo.Entity.Korisnik;
 import com.example.echo.Repository.KorisnikRepository;
 import com.example.echo.Specification.KorisnikSpecification;
@@ -21,7 +22,6 @@ import java.io.IOException;
 @RequestMapping(value="/si2019/echo")
 public class KorisnikController {
     private KorisnikRepository korisnikRepository;
-
     public KorisnikController(KorisnikRepository korisnikRepository) {
         this.korisnikRepository = korisnikRepository;
     }
@@ -32,11 +32,13 @@ public class KorisnikController {
         JsonNode json = mapper.readTree(data);
 
         String search = json.get("search").asText();
-        Page<Korisnik> res = korisnikRepository
+        /*Page<Korisnik> res = korisnikRepository
                 .findAll( KorisnikSpecification.firstNameAndLastNameMatch(search),
-                        PageRequest.of(json.get("page").asInt(), json.get("size").asInt()));
-
+                        PageRequest.of(json.get("page").asInt(), json.get("size").asInt()));*/
+        Page<KorisnikDTO> res = korisnikRepository.findAllBySearch("%",
+                PageRequest.of(json.get("page").asInt(), json.get("size").asInt()));
 
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
+
 }

@@ -1,5 +1,7 @@
 package com.example.echo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -29,26 +31,7 @@ public class Uloga {
         this.naziv = naziv;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Uloga uloga = (Uloga) o;
-
-        if (idUloga != uloga.idUloga) return false;
-        if (naziv != null ? !naziv.equals(uloga.naziv) : uloga.naziv != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idUloga;
-        result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
-        return result;
-    }
-
+    @JsonBackReference
     @OneToMany(mappedBy = "uloga")
     public List<Korisnik> getKorisnici() {
         return korisnici;
