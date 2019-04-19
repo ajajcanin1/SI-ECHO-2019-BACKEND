@@ -54,7 +54,6 @@ public class ZeljeniTermin {
         this.vrijeme = vrijeme;
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "idPredavac", referencedColumnName = "id")
     public Korisnik getPredavac() {

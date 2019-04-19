@@ -1,9 +1,7 @@
 package com.example.echo.Controller;
 
-import com.example.echo.DTO.KorisnikDTO;
-import com.example.echo.Entity.Korisnik;
+import com.example.echo.Dto.KorisnikDto;
 import com.example.echo.Repository.KorisnikRepository;
-import com.example.echo.Specification.KorisnikSpecification;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Page;
@@ -31,11 +29,11 @@ public class KorisnikController {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(data);
 
-        String search = json.get("search").asText();
+        String search = "%" + json.get("search").asText() + "%";
         /*Page<Korisnik> res = korisnikRepository
                 .findAll( KorisnikSpecification.firstNameAndLastNameMatch(search),
                         PageRequest.of(json.get("page").asInt(), json.get("size").asInt()));*/
-        Page<KorisnikDTO> res = korisnikRepository.findAllBySearch("%",
+        Page<KorisnikDto> res = korisnikRepository.findAllBySearch(search,
                 PageRequest.of(json.get("page").asInt(), json.get("size").asInt()));
 
         return ResponseEntity.status(HttpStatus.OK).body(res);

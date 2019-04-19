@@ -1,6 +1,6 @@
-package com.example.echo.DTO;
+package com.example.echo.Dto;
 
-public class KorisnikDTO {
+public class KorisnikDto {
 
     private int id;
     private String ime;
@@ -8,7 +8,7 @@ public class KorisnikDTO {
     private String email;
     private String titula;
 
-    public KorisnikDTO(int id, String ime, String prezime, String email, String titula) {
+    public KorisnikDto(int id, String ime, String prezime, String email, String titula) {
         this.id = id;
         this.ime = ime;
         this.prezime = prezime;
