@@ -1,15 +1,15 @@
 package com.example.echo.Entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 public class ZeljeniTermin {
     private int idZeljeniTermin;
     private Integer idKabinet;
     private String danUSedmici;
-    private Timestamp vrijeme;
+    private String vrijeme;
     private Korisnik predavac;
+    private Integer brCasova;
 
     @Id
     @Column(name = "idZeljeniTermin")
@@ -43,12 +43,19 @@ public class ZeljeniTermin {
 
     @Basic
     @Column(name = "vrijeme")
-    public Timestamp getVrijeme() {
+    public String getVrijeme() {
         return vrijeme;
     }
 
-    public void setVrijeme(Timestamp vrijeme) {
+    public void setVrijeme(String vrijeme) {
         this.vrijeme = vrijeme;
+    }
+
+    @Basic
+    @Column(name = "brCasova")
+    public Integer getBrCasova() { return brCasova;}
+    public void setBrCasova(Integer brCasova) {
+        this.brCasova = brCasova;
     }
 
     @Override
@@ -61,6 +68,7 @@ public class ZeljeniTermin {
         if (idZeljeniTermin != that.idZeljeniTermin) return false;
         if (idKabinet != null ? !idKabinet.equals(that.idKabinet) : that.idKabinet != null) return false;
         if (danUSedmici != null ? !danUSedmici.equals(that.danUSedmici) : that.danUSedmici != null) return false;
+        if (brCasova != null ? !brCasova.equals(that.brCasova) : that.brCasova != null) return false;
         if (vrijeme != null ? !vrijeme.equals(that.vrijeme) : that.vrijeme != null) return false;
 
         return true;
