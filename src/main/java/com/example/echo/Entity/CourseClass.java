@@ -97,10 +97,6 @@ public class CourseClass {
     public int hashCode() {
         return Objects.hash(id, idProfessor, idCourse, groups, numberOfSeats, requiresLab, duration);
     }
-
-
-
-}
     //Provjeriti
     public Boolean groupsOverlap(CourseClass c) {
         for (StudentsGroup t : groups) {
@@ -110,3 +106,4 @@ public class CourseClass {
         }
         return false;
     }
+}
