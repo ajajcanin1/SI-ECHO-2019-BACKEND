@@ -55,4 +55,7 @@ public class Professor {
         return Objects.hash(id, name, courseClasses);
     }
 
+    public void addCourseClass(CourseClass c) {
+        courseClasses.add(c);
+    }
 }
