@@ -98,6 +98,15 @@ public class CourseClass {
         return Objects.hash(id, idProfessor, idCourse, groups, numberOfSeats, requiresLab, duration);
     }
 
-   
+
 
 }
+    //Provjeriti
+    public Boolean groupsOverlap(CourseClass c) {
+        for (StudentsGroup t : groups) {
+            if(c.groups.contains(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
