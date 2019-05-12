@@ -7,13 +7,6 @@ import com.example.echo.Entity.Room;
 import com.example.echo.Entity.CourseClass;
 import java.io.*; 
 import java.util.*;
-// enum vrijednost za stanje algoritma
-public enum AlgorithmState
-{
-	AS_USER_STOPED,
-	AS_CRITERIA_STOPPED,
-	AS_RUNNING
-}
 public class Schedule {
     private int numberOfCrossoverPoints;
     private int mutationSize;
@@ -35,13 +28,7 @@ public Schedule(int numberOfCrossoverPoints, int mutationSize, int crossoverProb
     //slots.resize(5 * 12 * GetNumberOfRooms());
     //criteria.resize(5 * GetNumberOfCourseClasses());
 }
-// Copy constructor ubaciti
-public Schedule(const Schedule c, bool setUpOnly){
-}
-// Makes copy of chromosome
-Schedule MakeCopy(bool setupOnly){
-	return new Schedule( this, setupOnly);
-}
+
 /*
 // Performs mutation on chromosome 
 void Mutation()
@@ -85,15 +72,4 @@ void Mutation()
 void CalculateFitness(){}
 }
 */
-// u vs zajedno s schedule klasom stavljeno
-private class Algorithm{
-	private Vector<Schedule> chromosomes;
-	private Vector<bool> bestFlags;
-	private Vector<int> bestChromosomes;
-	private int currentBestSize;
-	private int replaceByGeneration;
-	private Schedule prototype;
-	private int currentGeneration;
-	static Algorithm instance;
-	private AlgorithmState state;
 }
