@@ -26,7 +26,7 @@ public class MinimalniKapacitetTest {
         CourseClass c = new CourseClass(2,  2,  2, null, 40, true, 4 );
         List<CourseClass> lista2=new ArrayList<>();
         lista2.add(c);
-        StudentsGroup grupa2= new StudentsGroup(1, "grupa2", 13, lista);
+        StudentsGroup grupa2= new StudentsGroup(1, "grupa2", 13, lista2);
         Boolean provjera2=grupa2.zadovoljenjeKapaciteta();
         assertTrue(provjera2==false);
     }
