@@ -7,6 +7,7 @@ public class StudentsGroup {
     private String name;
     private int numberOfStudents;
     private List<CourseClass> courseClasses;
+    private int min_kapacitet=15;
 
     public StudentsGroup(int id, String name, int numberOfStudents, List<CourseClass> courseClasses) {
         this.id = id;
@@ -69,5 +70,9 @@ public class StudentsGroup {
 
     public void addClass(CourseClass c) {
         courseClasses.add(c);
+    }
+    public Boolean zadovoljenjeKapaciteta(){
+        if(this.numberOfStudents>=min_kapacitet) return true;
+        return false;
     }
 }
