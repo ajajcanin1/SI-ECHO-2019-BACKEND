@@ -63,4 +63,10 @@ public class Room {
     public int hashCode() {
         return Objects.hash(id, name, lab, numberOfSeats);
     }
+
+//metoda za provjeru da li sala ima opremu koja je neophodna
+public Boolean imaOpremu(){
+    if(this.lab == true)return true;
+    return false;
+}
 }
