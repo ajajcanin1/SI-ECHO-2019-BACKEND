@@ -106,4 +106,9 @@ public class CourseClass {
         }
         return false;
     }
+
+    public Boolean ProfessorOverlaps (CourseClass c)
+    {
+        return idProfessor==c.getIdProfessor();
+    }
 }
