@@ -72,4 +72,114 @@ void Mutation()
 void CalculateFitness(){}
 }
 */
+
+    // provjeriti
+    int DAY_HOURS=12;
+
+
+    float GetFitness()
+    {
+        return fitness;
+    }
+
+    void CalculateFitness()
+    {
+        // chromosome's score
+        int score = 0;
+        int numberOfRooms =2; // treba ovo izmijeniti
+        int daySize = DAY_HOURS * numberOfRooms;
+        int ci = 0;
+        // check criterias and calculate scores for each class in schedule
+        for (Map.Entry<CourseClass, Integer> entry : classes.entrySet()) {
+            int p = entry.getValue();
+            int day = p / daySize;
+            int time = p % daySize;
+            int room = time / DAY_HOURS;
+            time = time % DAY_HOURS;
+
+            int dur = entry.getKey().getDuration();
+
+            // check for room overlapping of classes
+            Boolean ro = false;
+            for( int i = dur - 1; i >= 0; i-- )
+            {
+                if( slots.get( p + i ).size() > 1 )
+                {
+                    ro = true;
+                    break;
+                }
+            }
+            // on room overlaping
+            if( !ro )
+                score++;
+
+            criteria.set(ci,!ro);
+
+            CourseClass cc= entry.getKey();
+            Room r=new Room(1545,"S0",false,50); // OVO NE VALJA --> Treba dobiti Room by ID (room)
+
+            Boolean pomocnaVarijabla=false;
+            // does current room have enough seats
+            if(r.getNumberOfSeats() >= cc.getNumberOfSeats())
+                pomocnaVarijabla=true;
+
+            criteria.set( ci + 1,pomocnaVarijabla );
+
+            if( criteria.get( ci + 1 ) )
+                score++;
+            // does current room have computers if they are required
+            criteria.set(ci+2,!cc.getRequiresLab() || ( cc.getRequiresLab() && r.getLab() ));
+            if( criteria.get( ci + 2 ) )
+                score++;
+
+            Boolean po=false, go=false,idi=false;
+            // check overlapping of classes for professors and student groups
+            for( int i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS )
+            {
+                // for each hour of class
+                for( int j = dur - 1; j >= 0; j-- )
+                {
+                    // check for overlapping with other classes at same time
+                    List<CourseClass> pomocnaLista= slots.get(t+j);
+                    for(int k=0;k<pomocnaLista.size();k++)
+                    {
+                        CourseClass b=pomocnaLista.get(k);
+                        if(cc!=b)
+                        {
+                            // professor overlaps?
+                            if( !po && cc.ProfessorOverlaps(b) )
+                                po = true;
+
+                            // student group overlaps?
+                            if( !go && cc.groupsOverlap( b ) )
+                                go = true;
+
+                            // both type of overlapping? no need to check more
+                            if( po && go )
+                                idi=true;
+                        }
+                        if( idi )
+                            break;
+                    }
+                    if( idi )
+                        break;
+                }
+                if( idi )
+                    break;
+            }
+            // professors have no overlaping classes?
+            if( !po )
+                score++;
+            criteria.set(ci+3,!po);
+            // student groups has no overlaping classes?
+            if( !go )
+                score++;
+            criteria.set( ci + 4,!go);
+
+            ci += 5;
+        }
+
+        fitness = (float)score; // NE VALJA --> Treba fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() * DAYS_NUM );
+
+    }
 }
