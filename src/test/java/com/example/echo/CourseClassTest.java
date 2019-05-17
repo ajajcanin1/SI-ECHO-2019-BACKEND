@@ -1,7 +1,7 @@
 package com.example.echo;
 
-import com.example.echo.Entity.CourseClass;
-import com.example.echo.Entity.StudentsGroup;
+import com.example.echo.DTO.CourseClass;
+import com.example.echo.DTO.StudentsGroup;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

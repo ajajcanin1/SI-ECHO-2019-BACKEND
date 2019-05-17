@@ -1,12 +1,14 @@
-package com.example.echo.Entity;
+package com.example.echo.DTO;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.List;
-import java.util.Random;
-import com.example.echo.Entity.Room;
-import com.example.echo.Entity.CourseClass;
-import java.io.*; 
-import java.util.*;
+enum AlgorithmState
+{
+    AS_USER_STOPED,
+    AS_CRITERIA_STOPPED,
+    AS_RUNNING
+};
+
 public class Schedule {
     private int numberOfCrossoverPoints;
     private int mutationSize;
@@ -72,4 +74,34 @@ void Mutation()
 void CalculateFitness(){}
 }
 */
+// Copy constructor
+public Schedule(Schedule c, Boolean setupOnly) {
+
+    if(!setupOnly) {
+        this.fitness = c.fitness;
+        this.criteria = c.criteria;
+        this.slots = c.slots;
+        this.classes = c.classes;
+    }
+    else {
+            /*
+            int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
+            int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
+
+            for(int i = this.slots.size(); i < newSlotsSize; i++) {
+                List<CourseClass> l1 = new ArrayList<CourseClass>();
+                this.slots.add(l1);
+            }
+            for(int i = this.criteria.size(); i < newCriteriaSize; i++) {
+                this.criteria.add(null);
+            }
+
+             */
+    }
+    this.numberOfCrossoverPoints = c.numberOfCrossoverPoints;
+    this.mutationSize = c.mutationSize;
+    this.crossoverProbability = c.crossoverProbability;
+    this.mutationProbability = c.mutationProbability;
+
+}
 }
