@@ -1,4 +1,4 @@
-package com.example.echo.Entity;
+package com.example.echo.DTO;
 import java.util.List;
 import java.util.Objects;
 

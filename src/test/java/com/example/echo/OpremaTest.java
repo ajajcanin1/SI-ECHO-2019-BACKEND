@@ -1,5 +1,5 @@
 package com.example.echo;
-import com.example.echo.Entity.Room;
+import com.example.echo.DTO.Room;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

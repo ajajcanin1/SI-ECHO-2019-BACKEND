@@ -1,12 +1,8 @@
-package com.example.echo.Entity;
+package com.example.echo.DTO;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.List;
-import java.util.Random;
-import com.example.echo.Entity.Room;
-import com.example.echo.Entity.CourseClass;
-import java.io.*; 
-import java.util.*;
+
 public class Schedule {
     private int numberOfCrossoverPoints;
     private int mutationSize;

@@ -1,8 +1,6 @@
 package com.example.echo;
-import com.example.echo.Entity.Course;
-import com.example.echo.Entity.CourseClass;
-import com.example.echo.Entity.Professor;
-import com.example.echo.Entity.StudentsGroup;
+import com.example.echo.DTO.CourseClass;
+import com.example.echo.DTO.Professor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

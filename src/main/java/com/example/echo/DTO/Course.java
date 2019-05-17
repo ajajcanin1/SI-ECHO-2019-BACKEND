@@ -1,4 +1,4 @@
-package com.example.echo.Entity;
+package com.example.echo.DTO;
 import java.util.Objects;
 
 public class Course {
