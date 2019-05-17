@@ -116,7 +116,10 @@ public class Schedule {
 
     }
 
-
+    // Makes copy of chromosome
+    public Schedule MakeCopy(Boolean setupOnly) {
+        return new Schedule(this, setupOnly);
+    }
 
 
 
