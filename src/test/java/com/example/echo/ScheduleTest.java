@@ -24,4 +24,13 @@ public class ScheduleTest {
         Assert.assertEquals(x, y);
     }
 
+    @Test
+    public void testMakeCopy() throws Exception {
+        Schedule x = new Schedule(1,2,3,4);
+        Schedule y = new Schedule(5,6,7,8);
+
+        y = x.MakeCopy(false);
+        Assert.assertEquals(x, y);
+    }
+
 }
