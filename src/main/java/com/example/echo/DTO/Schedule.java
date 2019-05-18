@@ -121,12 +121,6 @@ public class Schedule {
         return new Schedule(this, setupOnly);
     }
 
-
-
-
-
-
-
 /*
 // Performs mutation on chromosome
 void Mutation()
