@@ -24,7 +24,6 @@ public class StudentsGroup {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -32,7 +31,6 @@ public class StudentsGroup {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public int getNumberOfStudents() {
         return numberOfStudents;
@@ -42,7 +40,6 @@ public class StudentsGroup {
         this.numberOfStudents = numberOfStudents;
     }
 
-    //Dodati
     public List<CourseClass> getCourseClasses() {
         return courseClasses;
     }
@@ -71,6 +68,7 @@ public class StudentsGroup {
     public void addClass(CourseClass c) {
         courseClasses.add(c);
     }
+
     public Boolean zadovoljenjeKapaciteta(){
         if(this.numberOfStudents>=min_kapacitet) return true;
         return false;

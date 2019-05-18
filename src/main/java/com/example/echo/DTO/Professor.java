@@ -22,7 +22,6 @@ public class Professor {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -31,7 +30,6 @@ public class Professor {
         this.name = name;
     }
 
-    //Dodati
     public List<CourseClass> getCourseClasses() {
         return courseClasses;
     }
