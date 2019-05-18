@@ -9,9 +9,9 @@ public class Algorithm {
     AS_CRITERIA_STOPPED,
     AS_RUNNING
     };
-    private ArrayList<Schedule> chromosomes;
-    private ArrayList<Boolean> bestFlags;
-    private ArrayList<Integer> bestChromosomes;
+    private ArrayList<Schedule> chromosomes = new ArrayList<>();
+    private ArrayList<Boolean> bestFlags = new ArrayList<>();
+    private ArrayList<Integer> bestChromosomes = new ArrayList<>();
     private Integer currentBestSize;
     private Integer replaceByGeneration;
     private Schedule prototype;
@@ -43,16 +43,16 @@ public class Algorithm {
 	else if( replaceByGeneration > numberOfChromosomes - trackBest )
 	replaceByGeneration = numberOfChromosomes - trackBest;
 
-    /*u vs kodu ima dio za resize ali arraylist je dinamična mislim da ovo nije potrebno
-	chromosomes.resize( numberOfChromosomes );
-	bestFlags.resize( numberOfChromosomes );
-	bestChromosomes.resize( trackBest );
-    */
-	for( int i = chromosomes.size() - 1; i >= 0; --i )
+  
+	chromosomes.ensureCapacity( numberOfChromosomes );
+	bestFlags.ensureCapacity( numberOfChromosomes );
+	bestChromosomes.ensureCapacity(trackBest );
+
+	for( int i = 0; i < numberOfChromosomes; i++)
 	{
         Schedule x = new Schedule(0,0,0,0);
-		chromosomes.set(i, x);
-		bestFlags.set(i, false);
+		chromosomes.add(i, x);
+		bestFlags.add(i, false);
     }
 }
     //vrati true ako hromosom pripada grupi najbolji hromosom
