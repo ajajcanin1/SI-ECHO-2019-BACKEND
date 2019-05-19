@@ -22,7 +22,6 @@ public class Room {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -38,7 +37,6 @@ public class Room {
     public void setLab(Boolean lab) {
         this.lab = lab;
     }
-
 
     public int getNumberOfSeats() {
         return numberOfSeats;
@@ -64,9 +62,9 @@ public class Room {
         return Objects.hash(id, name, lab, numberOfSeats);
     }
 
-//metoda za provjeru da li sala ima opremu koja je neophodna
-public Boolean imaOpremu(){
-    if(this.lab == true)return true;
-    return false;
-}
+    //metoda za provjeru da li sala ima opremu koja je neophodna
+    public Boolean imaOpremu(){
+        if(this.lab == true)return true;
+        return false;
+    }
 }

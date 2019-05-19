@@ -1,5 +1,7 @@
 package com.example.echo.DTO;
+ECHO-Sprint5_92_94
 import com.example.echo.DTO.Schedule;
+develop
 import java.util.ArrayList;
 
 public class Algorithm{

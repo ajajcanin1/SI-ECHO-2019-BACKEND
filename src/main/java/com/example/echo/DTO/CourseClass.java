@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class CourseClass {
 
-
     private int id;
     private int idProfessor;
     private int idCourse;
@@ -97,13 +96,14 @@ public class CourseClass {
     public int hashCode() {
         return Objects.hash(id, idProfessor, idCourse, groups, numberOfSeats, requiresLab, duration);
     }
-    //Provjeriti
-    public Boolean groupsOverlap(CourseClass c) {
-        for (StudentsGroup t : groups) {
-            if(c.groups.contains(t)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
+   public Boolean groupsOverlap(CourseClass cc) {
+       for (StudentsGroup sg: groups) {
+           if(cc.groups.contains(sg)) {
+               return true;
+           }
+           else return false;
+       }
+       return false;
+   }
 }
