@@ -1,8 +1,8 @@
 package com.example.echo.DTO;
-
+import com.example.echo.DTO.Schedule;
 import java.util.ArrayList;
 
-public class Algorithm {
+public class Algorithm{
     public enum AlgorithmState
     {
     AS_USER_STOPED,
@@ -46,7 +46,7 @@ public class Algorithm {
   
 	chromosomes.ensureCapacity( numberOfChromosomes );
 	bestFlags.ensureCapacity( numberOfChromosomes );
-	bestChromosomes.ensureCapacity(trackBest );
+	bestChromosomes.ensureCapacity(trackBest);
 
 	for( int i = 0; i < numberOfChromosomes; i++)
 	{
@@ -55,14 +55,45 @@ public class Algorithm {
 		bestFlags.add(i, false);
     }
 }
+//provjeriti
+public void AddToBest(int chromosomeIndex)
+{
+     
+    if(currentBestSize != 0)
+    if((currentBestSize == bestChromosomes.size() && 
+		chromosomes.get(bestChromosomes.get(currentBestSize - 1)).GetFitness() >= 
+		chromosomes.get(chromosomeIndex).GetFitness() ) || bestFlags.get(chromosomeIndex))
+        return; 
+        
+    int i = currentBestSize;
+    if(i != 0){
+	for( ; i > 0; i-- )
+	{
+		if( i < bestChromosomes.size() )
+		{
+			if(chromosomes.get(bestChromosomes.get(i - 1)).GetFitness() > 
+				chromosomes.get(chromosomeIndex).GetFitness())
+				break;
+			bestChromosomes.set(i, bestChromosomes.get(i - 1));
+		}
+		else
+			bestFlags.set(bestChromosomes.get( i - 1), false);
+    }
+    }
+    bestChromosomes.add(chromosomeIndex);
+	bestFlags.set(chromosomeIndex, true);
+	if(currentBestSize < bestChromosomes.size()) currentBestSize++;
+}
     //vrati true ako hromosom pripada grupi najbolji hromosom
     public boolean IsInBest(int ChromosomeIndex){
-        return bestFlags.contains(bestFlags.get(ChromosomeIndex));
+        boolean sadrzi = bestFlags.contains(bestFlags.get(ChromosomeIndex));
+        if(sadrzi == true && bestFlags.get(ChromosomeIndex) == true)return true;
+        else return false;
     }
     //clear best chromosome group
     public void ClearBest(){
         for(int i = bestFlags.size() - 1; i >= 0; --i){
-            bestFlags.set(i, false);
+        bestFlags.set(i, false);
         }
         currentBestSize = 0;
     }
