@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class CourseClass {
 
-
     private int id;
     private int idProfessor;
     private int idCourse;

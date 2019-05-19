@@ -1,5 +1,4 @@
 package com.example.echo.DTO;
-
 import java.util.ArrayList;
 
 public class Algorithm {
