@@ -1,5 +1,7 @@
 package com.example.echo.DTO;
 import java.util.*;
+import com.example.echo.DTO.Algorithm;
+import com.example.echo.DTO.Configuration;
 
 enum AlgorithmState
 {
@@ -122,4 +124,52 @@ public class Schedule {
     public Schedule MakeCopy(Boolean setupOnly) {
         return new Schedule(this, setupOnly);
     }
+    
+    // Performs mutation on chromosome (provjeriti)
+    public void Mutation(){
+        //int random=rand.nextInt(1000);
+        int random=3; //hardkodirana vrijednost za testiranje, jer se radi sa random brojevima
+        // zbog uslova da random%100 mora bit < mutationProbability
+        // test napisan kao da je random%100 < mutationProbability
+        if(random%100>mutationProbability)
+        return;
+        int numberOfClasses=classes.size();
+        for(int i=mutationSize; i>0; i--){
+            int mpos = random % numberOfClasses;
+            int pos1 = 0;
+            int br=0;
+            CourseClass cc1=null;
+          for(CourseClass key :classes.keySet()){
+              if(br==mpos){
+                cc1=key;
+                pos1=classes.get(key);
+                break;
+              }
+              br++;
+          }
+          int nr= configuration.GetNumberOfRooms();
+          int dur=cc1.getDuration();
+          int day=random % DAYS_NUM;
+          int room=random%nr;
+          int time= random % ( DAY_HOURS + 1 - dur );
+          int pos2 = day * nr * DAY_HOURS + room * DAY_HOURS + time;
+          for(int j=dur-1; j>=0; j--){
+              if(pos1+j<slots.size()){
+              List<CourseClass> cl= slots.get(pos1+j);
+              for(int k=0; k<cl.size(); k++){
+                  if(cl.get(k)==cc1){
+                      cl.remove(k);
+                      break;
+                  }
+              }
+              List<CourseClass> nova= new ArrayList<>();
+              nova.add(cc1);
+              slots.add(pos2+j, nova);
+            }
+          }
+          classes.put(cc1, pos2);
+        }
+        //CalculateFitness(); //uradio Armin ali nije mergano
+        //kada se merga stvarno pozvati metodu
+    }   
 }

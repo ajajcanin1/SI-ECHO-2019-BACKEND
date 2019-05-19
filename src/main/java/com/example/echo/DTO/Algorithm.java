@@ -1,7 +1,5 @@
 package com.example.echo.DTO;
-ECHO-Sprint5_92_94
 import com.example.echo.DTO.Schedule;
-develop
 import java.util.ArrayList;
 
 public class Algorithm{
@@ -24,6 +22,7 @@ public class Algorithm{
     public Algorithm getInstance() {
         return this;
     }
+    
     //DODATI METODE
     //inicijalizacija genetickog algoritma
     public Algorithm(int numberOfChromosomes, int replaceByGeneration, int trackBest, Schedule prototype) {
