@@ -22,6 +22,7 @@ public class Algorithm{
     public Algorithm getInstance() {
         return this;
     }
+    
     //DODATI METODE
     //inicijalizacija genetickog algoritma
     public Algorithm(int numberOfChromosomes, int replaceByGeneration, int trackBest, Schedule prototype) {
