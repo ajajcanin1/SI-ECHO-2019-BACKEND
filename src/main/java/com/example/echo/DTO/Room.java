@@ -67,4 +67,10 @@ public class Room {
         if(this.lab == true)return true;
         return false;
     }
+
+    //metoda za provjeru da li sala ima dovoljan kapacitet
+    public Boolean imaDovoljanKapacitet(int brojStudenata){
+        if(this.numberOfSeats >= brojStudenata)return true;
+        return false;
+    }
 }
