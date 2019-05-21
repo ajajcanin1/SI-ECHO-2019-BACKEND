@@ -124,7 +124,62 @@ public class Schedule {
     public Schedule MakeCopy(Boolean setupOnly) {
         return new Schedule(this, setupOnly);
     }
-    
+
+    // Performes crossover operation using to chromosomes and returns pointer to offspring
+    public Schedule Crossover(Schedule parent2) {
+
+        if (rand.nextInt()%100 > this.crossoverProbability) {
+            return new Schedule(this, false);
+        }
+        Schedule n = new Schedule(this, true);
+        int size = this.classes.size();
+        ArrayList<Boolean> cp=new ArrayList(size);
+
+        for (int i = this.numberOfCrossoverPoints; i>0; i++) {
+            while (true) {
+                int p=rand.nextInt()%size;
+                if (!cp.get(p)) {
+                    cp.add(p,true);
+                    break;
+                }
+            }
+        }
+        Map<CourseClass, Integer> mapChild = this.classes;
+        Map<CourseClass, Integer> mapParent = parent2.classes;
+
+        Map.Entry<CourseClass, Integer> it1 = mapChild.entrySet().iterator().next();
+        Map.Entry<CourseClass, Integer> it2 = mapParent.entrySet().iterator().next();
+
+        Boolean first = rand.nextInt()%2 == 0;
+        for(int i = 0; i < size; i++) {
+            if(first) {
+                n.classes.put(it1.getKey(), it1.getValue());
+                for(int j = it1.getKey().getDuration() - 1; j >= 0; j-- ) {
+                    int poc = it1.getValue() + j;
+                    List<CourseClass> temp = n.slots.get(poc);
+                    temp.add(it1.getKey());
+                    n.slots.set(poc, temp);
+                }
+            }
+            else {
+                n.classes.put(it2.getKey(), it2.getValue());
+                for(int j = it2.getKey().getDuration() - 1; j >= 0; j-- ) {
+                    int poc = it2.getValue() + j;
+                    List<CourseClass> temp = n.slots.get(poc);
+                    temp.add(it2.getKey());
+                    n.slots.set(poc, temp);
+                }
+            }
+            if(cp.get(i)) {
+                first = !first;
+            }
+            it1 = mapChild.entrySet().iterator().next();
+            it2 = parent2.classes.entrySet().iterator().next();
+        }
+        //n.CalculateFitness();
+        return n;
+    }
+
     // Performs mutation on chromosome (provjeriti)
     public void Mutation(){
         //int random=rand.nextInt(1000);
