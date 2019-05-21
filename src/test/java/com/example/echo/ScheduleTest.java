@@ -25,4 +25,15 @@ public class ScheduleTest {
         y = x.MakeCopy(false);
         Assert.assertEquals(x, y);
     }
+
+    /*
+    @Test
+    public void testCrossover() throws Exception {
+        Schedule x = new Schedule(1,2,3,4);
+        Schedule y = new Schedule(5,6,7,8);
+
+        Schedule child = x.Crossover(y);
+        Assert.assertNotEquals(child, x);
+    }
+    */
 }
