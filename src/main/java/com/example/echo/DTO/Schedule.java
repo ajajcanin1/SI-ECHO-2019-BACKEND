@@ -99,7 +99,7 @@ public class Schedule {
             this.classes = c.classes;
         }
         else {
-                /*
+
                 int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
                 int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
 
@@ -111,7 +111,7 @@ public class Schedule {
                     this.criteria.add(null);
                 }
 
-                 */
+
         }
         this.numberOfCrossoverPoints = c.numberOfCrossoverPoints;
         this.mutationSize = c.mutationSize;
@@ -179,7 +179,27 @@ public class Schedule {
         //n.CalculateFitness();
         return n;
     }
+    //Kreira novi hromosom sa istim setupom, ali sa random odabranim kodom
+    public Schedule MakeNewFromPrototype() {
+        int size = this.slots.size();
+        Schedule newChromosome = new Schedule(this, true);
+        List<CourseClass> c = configuration.GetCourseClasses();
+        for(CourseClass it : c) {
+            int nr = configuration.GetNumberOfRooms();
+            int dur = it.getDuration();
+            int day = rand.nextInt()%DAYS_NUM;
+            int room = rand.nextInt()%nr;
+            int time = rand.nextInt()%(DAY_HOURS + 1 - dur);
+            int pos = day * nr * DAY_HOURS + room * DAY_HOURS + time;
 
+            for(int i = dur - 1; i >= 0; i--) {
+                newChromosome.slots.get(pos + 1).add(it);
+            }
+            newChromosome.classes.put(it, pos);
+        }
+        //newChromosome.CalculateFitness();
+        return newChromosome;
+    }
     // Performs mutation on chromosome (provjeriti)
     public void Mutation(){
         //int random=rand.nextInt(1000);
