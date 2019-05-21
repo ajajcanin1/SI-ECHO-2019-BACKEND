@@ -25,4 +25,23 @@ public class ScheduleTest {
         y = x.MakeCopy(false);
         Assert.assertEquals(x, y);
     }
+        /*
+    @Test
+    public void testMakeNewFromPrototype() throws Exception {
+        Schedule x = new Schedule(1,2,3,4);
+        Schedule y = new Schedule(5,6,7,8);
+
+        ArrayList<List<CourseClass>> tempSlots1 = new ArrayList<List<CourseClass>>();
+        for(int j = 0; j < 3; j++) {
+            List<CourseClass> l1 = new ArrayList<CourseClass>();
+            for(int i=1; i<10; i++) {
+                CourseClass c1 = new CourseClass(i,i,i,null,20 + i,false,4 + i);
+                l1.add(c1);
+            }
+            tempSlots1.add(l1);
+        }
+        x.setSlots(tempSlots1);
+        Assert.assertNotEquals(x, x.MakeNewFromPrototype());
+    }
+    */
 }
