@@ -39,25 +39,21 @@ public class Schedule {
         this.mutationProbability = mutationProbability;
         this.fitness = 0;
 
-
+        /*
+        for(int i = 0; i < newSlotsSize; i++) {
+            List<CourseClass> l1 = new ArrayList<CourseClass>();
+            this.slots.add(l1);
+        }
+        for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
+            this.criteria.add(null);
+        }
+        */
 
         int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
         int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
         this.slots=new ArrayList<List<CourseClass>>(newSlotsSize);
-        /*for(int i = 0; i < newSlotsSize; i++) {
-            List<CourseClass> l1 = new ArrayList<CourseClass>();
-            this.slots.add(l1);
-        }*/
-    /*        for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
-            this.criteria.add(null);
-        }*/
-    this.criteria=new ArrayList<Boolean>(newCriteriaSize);
-       // this.criteria = new ArrayList<Boolean>();
-        //this.slots = new ArrayList<List<CourseClass>>();
+        this.criteria=new ArrayList<Boolean>(newCriteriaSize);
         this.classes = new HashMap<CourseClass, Integer>();
-        //ubaciti
-        //slots.resize(5 * 12 * GetNumberOfRooms());
-        //criteria.resize(5 * GetNumberOfCourseClasses());
     }
 
     public ArrayList<Boolean> getCriteria() {
@@ -117,17 +113,19 @@ public class Schedule {
         }
         else {
 
-                int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
-                int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
+            /*
+            for(int i = 0; i < newSlotsSize; i++) {
+                List<CourseClass> l1 = new ArrayList<CourseClass>();
+                this.slots.add(l1);
+            }
+            for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
+                this.criteria.add(null);
+            }
+            */
 
+            int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
+            int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
             this.slots=new ArrayList<List<CourseClass>>(newSlotsSize);
-        /*for(int i = 0; i < newSlotsSize; i++) {
-            List<CourseClass> l1 = new ArrayList<CourseClass>();
-            this.slots.add(l1);
-        }*/
-    /*        for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
-            this.criteria.add(null);
-        }*/
             this.criteria=new ArrayList<Boolean>(newCriteriaSize);
 
         }
@@ -194,7 +192,7 @@ public class Schedule {
             it1 = mapChild.entrySet().iterator().next();
             it2 = parent2.classes.entrySet().iterator().next();
         }
-        //n.CalculateFitness();
+        n.CalculateFitness();
         return n;
     }
     //Kreira novi hromosom sa istim setupom, ali sa random odabranim kodom
