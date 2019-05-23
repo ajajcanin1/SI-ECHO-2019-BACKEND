@@ -2,6 +2,9 @@ package com.example.echo.DTO;
 import java.util.*;
 import com.example.echo.DTO.Algorithm;
 import com.example.echo.DTO.Configuration;
+import org.springframework.lang.Nullable;
+
+import javax.validation.constraints.NotNull;
 
 enum AlgorithmState
 {
@@ -17,6 +20,7 @@ public class Schedule {
     private int mutationProbability;
     private float fitness;
     private ArrayList<Boolean> criteria;
+
     private ArrayList<List<CourseClass>> slots;
     private HashMap<CourseClass, Integer> classes;
 
@@ -35,8 +39,21 @@ public class Schedule {
         this.mutationProbability = mutationProbability;
         this.fitness = 0;
 
-        this.criteria = new ArrayList<Boolean>();
-        this.slots = new ArrayList<List<CourseClass>>();
+
+
+        int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
+        int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
+        this.slots=new ArrayList<List<CourseClass>>(newSlotsSize);
+        /*for(int i = 0; i < newSlotsSize; i++) {
+            List<CourseClass> l1 = new ArrayList<CourseClass>();
+            this.slots.add(l1);
+        }*/
+    /*        for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
+            this.criteria.add(null);
+        }*/
+    this.criteria=new ArrayList<Boolean>(newCriteriaSize);
+       // this.criteria = new ArrayList<Boolean>();
+        //this.slots = new ArrayList<List<CourseClass>>();
         this.classes = new HashMap<CourseClass, Integer>();
         //ubaciti
         //slots.resize(5 * 12 * GetNumberOfRooms());
@@ -103,14 +120,15 @@ public class Schedule {
                 int newSlotsSize = DAYS_NUM * DAY_HOURS * configuration.GetNumberOfRooms();
                 int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
 
-                for(int i = this.slots.size(); i < newSlotsSize; i++) {
-                    List<CourseClass> l1 = new ArrayList<CourseClass>();
-                    this.slots.add(l1);
-                }
-                for(int i = this.criteria.size(); i < newCriteriaSize; i++) {
-                    this.criteria.add(null);
-                }
-
+            this.slots=new ArrayList<List<CourseClass>>(newSlotsSize);
+        /*for(int i = 0; i < newSlotsSize; i++) {
+            List<CourseClass> l1 = new ArrayList<CourseClass>();
+            this.slots.add(l1);
+        }*/
+    /*        for(int i = this.criteria.size()-1; i < newCriteriaSize; i++) {
+            this.criteria.add(null);
+        }*/
+            this.criteria=new ArrayList<Boolean>(newCriteriaSize);
 
         }
         this.numberOfCrossoverPoints = c.numberOfCrossoverPoints;
