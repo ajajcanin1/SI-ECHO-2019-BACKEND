@@ -145,4 +145,9 @@ public void AddToBest(int chromosomeIndex)
         }
         currentBestSize = 0;
     }
+    public Schedule GetBestChromosome(){
+        Integer indeks=bestChromosomes.get(0);
+        Schedule chromosom= chromosomes.get(indeks);
+        return chromosom;
+    }
 }
