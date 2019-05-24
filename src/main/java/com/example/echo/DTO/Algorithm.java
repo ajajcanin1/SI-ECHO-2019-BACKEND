@@ -21,8 +21,55 @@ public class Algorithm{
     //ako bude trebalo dodati ostale atribute -> vidjeti algoritam
     public Algorithm getInstance() {
         return this;
+    }    
+    public ArrayList<Schedule> getChromosomes(){
+        return chromosomes;
     }
-    
+    public void setChromosomes(ArrayList<Schedule>chromosomes){
+        this.chromosomes=chromosomes;
+    }
+    public ArrayList<Boolean> getBestFlags(){
+        return bestFlags;
+    }
+    public void setBestFlags(ArrayList<Boolean> bestFlags){
+        this.bestFlags=bestFlags;
+    }
+    public ArrayList<Integer> getBestChromosomes(){
+        return bestChromosomes;
+    }
+    public void setBestChromosomes(ArrayList<Integer> bestChromosomes){
+        this.bestChromosomes=bestChromosomes;
+    }
+    public Integer getCurrentBestSize(){
+        return currentBestSize;
+    }
+    public void setCurrentBestSize(Integer currentBestSize){
+        this.currentBestSize=currentBestSize;
+    }
+    public Integer getReplaceByGeneration(){
+        return replaceByGeneration;
+    }
+    public void setReplaceByGeneration(Integer replaceByGeneration){
+        this.replaceByGeneration=replaceByGeneration;
+    }
+    public Schedule getPrototype(){
+        return prototype;
+    }
+    public void setPrototype(Schedule prototype){
+        this.prototype=prototype;
+    }
+    public Integer getCurrentGeneration(){
+        return currentGeneration;
+    }
+    public void setCurrentGeneration(Integer currentGeneration){
+        this.currentGeneration=currentGeneration;
+    }
+    public AlgorithmState getState(){
+        return state;
+    }
+    public void setState(AlgorithmState state){
+        this.state=state;
+    }
     //DODATI METODE
     //inicijalizacija genetickog algoritma
     public Algorithm(int numberOfChromosomes, int replaceByGeneration, int trackBest, Schedule prototype) {
