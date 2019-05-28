@@ -147,7 +147,7 @@ public class Schedule {
         int size = this.classes.size();
         ArrayList<Boolean> cp=new ArrayList(size);
 
-        for (int i = this.numberOfCrossoverPoints; i>0; i++) {
+        for (int i = this.numberOfCrossoverPoints; i>0; i--) {
             while (true) {
                 int p=rand.nextInt()%size;
                 if (!cp.get(p)) {
