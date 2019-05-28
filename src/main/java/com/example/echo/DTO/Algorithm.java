@@ -1,6 +1,7 @@
 package com.example.echo.DTO;
 import com.example.echo.DTO.Schedule;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Algorithm{
     public enum AlgorithmState
@@ -149,5 +150,14 @@ public void AddToBest(int chromosomeIndex)
         Integer indeks=bestChromosomes.get(0);
         Schedule chromosom= chromosomes.get(indeks);
         return chromosom;
+    }
+    public void Stop()
+    {
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();//provjeriti ovo
+        if( state == AlgorithmState.AS_RUNNING )
+            state = AlgorithmState.AS_USER_STOPED;
+
+        lock.unlock();
     }
 }

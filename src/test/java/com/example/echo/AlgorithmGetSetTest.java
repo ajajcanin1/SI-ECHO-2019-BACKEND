@@ -22,4 +22,12 @@ public class AlgorithmGetSetTest {
         a.setChromosomes(lista);
         Assert.assertTrue(a.getChromosomes()==lista);
     }
+    @Test
+    public void stopAlgorithm() throws Exception{
+        Schedule x = new Schedule(1,2,3,4);
+        Algorithm a= new Algorithm(1,2,3, x);
+        a.setState(Algorithm.AlgorithmState.AS_RUNNING);
+        a.Stop();
+        Assert.assertTrue(Algorithm.AlgorithmState.AS_USER_STOPED==a.getState());
+    }
 }
