@@ -4,13 +4,18 @@ import com.example.echo.DTO.Professor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import sun.security.krb5.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = Config.class, loader = AnnotationConfigContextLoader.class)
 @SpringBootTest
 public class ProfessorTest {
     @Test
