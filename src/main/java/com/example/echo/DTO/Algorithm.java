@@ -1,6 +1,9 @@
 package com.example.echo.DTO;
 import com.example.echo.DTO.Schedule;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Algorithm{
@@ -18,59 +21,82 @@ public class Algorithm{
     private Schedule prototype;
     private Integer currentGeneration;
     private AlgorithmState state;
+    Random rand = new Random();
 
     //ako bude trebalo dodati ostale atribute -> vidjeti algoritam
-    public Algorithm getInstance() {
-        return this;
-    }    
-    public ArrayList<Schedule> getChromosomes(){
+
+    public ArrayList<Schedule> getChromosomes() {
         return chromosomes;
     }
-    public void setChromosomes(ArrayList<Schedule>chromosomes){
-        this.chromosomes=chromosomes;
+
+    public void setChromosomes(ArrayList<Schedule> chromosomes) {
+        this.chromosomes = chromosomes;
     }
-    public ArrayList<Boolean> getBestFlags(){
+
+    public ArrayList<Boolean> getBestFlags() {
         return bestFlags;
     }
-    public void setBestFlags(ArrayList<Boolean> bestFlags){
-        this.bestFlags=bestFlags;
+
+    public void setBestFlags(ArrayList<Boolean> bestFlags) {
+        this.bestFlags = bestFlags;
     }
-    public ArrayList<Integer> getBestChromosomes(){
+
+    public ArrayList<Integer> getBestChromosomes() {
         return bestChromosomes;
     }
-    public void setBestChromosomes(ArrayList<Integer> bestChromosomes){
-        this.bestChromosomes=bestChromosomes;
+
+    public void setBestChromosomes(ArrayList<Integer> bestChromosomes) {
+        this.bestChromosomes = bestChromosomes;
     }
-    public Integer getCurrentBestSize(){
+
+    public Integer getCurrentBestSize() {
         return currentBestSize;
     }
-    public void setCurrentBestSize(Integer currentBestSize){
-        this.currentBestSize=currentBestSize;
+
+    public void setCurrentBestSize(Integer currentBestSize) {
+        this.currentBestSize = currentBestSize;
     }
-    public Integer getReplaceByGeneration(){
+
+    public Integer getReplaceByGeneration() {
         return replaceByGeneration;
     }
-    public void setReplaceByGeneration(Integer replaceByGeneration){
-        this.replaceByGeneration=replaceByGeneration;
+
+    public void setReplaceByGeneration(Integer replaceByGeneration) {
+        this.replaceByGeneration = replaceByGeneration;
     }
-    public Schedule getPrototype(){
+
+    public Schedule getPrototype() {
         return prototype;
     }
-    public void setPrototype(Schedule prototype){
-        this.prototype=prototype;
+
+    public void setPrototype(Schedule prototype) {
+        this.prototype = prototype;
     }
-    public Integer getCurrentGeneration(){
+
+    public Integer getCurrentGeneration() {
         return currentGeneration;
     }
-    public void setCurrentGeneration(Integer currentGeneration){
-        this.currentGeneration=currentGeneration;
+
+    public void setCurrentGeneration(Integer currentGeneration) {
+        this.currentGeneration = currentGeneration;
     }
-    public AlgorithmState getState(){
+
+    public AlgorithmState getState() {
         return state;
     }
-    public void setState(AlgorithmState state){
-        this.state=state;
+
+    public void setState(AlgorithmState state) {
+        this.state = state;
     }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public void setRand(Random rand) {
+        this.rand = rand;
+    }
+
     //DODATI METODE
     //inicijalizacija genetickog algoritma
     public Algorithm(int numberOfChromosomes, int replaceByGeneration, int trackBest, Schedule prototype) {
@@ -159,5 +185,55 @@ public void AddToBest(int chromosomeIndex)
             state = AlgorithmState.AS_USER_STOPED;
 
         lock.unlock();
+    }
+    public void Start() {
+        if(this.getPrototype() == null) {
+            return;
+        }
+        if(this.state == AlgorithmState.AS_RUNNING) {
+            return;
+        }
+        state = AlgorithmState.AS_RUNNING;
+        this.ClearBest();
+        int indeks=0;
+        Iterator it=this.chromosomes.iterator();
+        for (int j=0; j<this.chromosomes.size(); j++) {
+            if(this.chromosomes.get(j) != null) {
+                this.chromosomes.remove(j);
+            }
+            this.chromosomes.add(j, this.prototype.MakeNewFromPrototype());
+            this.AddToBest(indeks);
+        }
+        this.currentGeneration=0;
+
+        while (true) {
+            if(this.state != AlgorithmState.AS_RUNNING) {
+                break;
+            }
+            Schedule best=this.GetBestChromosome();
+            if(best.GetFitness()>=1) {
+                this.state=AlgorithmState.AS_CRITERIA_STOPPED;
+                break;
+            }
+            Vector<Schedule> offspring=new Vector<Schedule>(this.replaceByGeneration);
+            for (int j=0; j<this.replaceByGeneration; j++) {
+                Schedule p1 = this.chromosomes.get(rand.nextInt()%this.chromosomes.size());
+                Schedule p2 = this.chromosomes.get(rand.nextInt()%this.chromosomes.size());
+                offspring.set(j,p1.Crossover((p2)));
+                offspring.get(j).Mutation();
+            }
+            for (int j=0; j<this.replaceByGeneration; j++) {
+                int ci;
+                do {
+                    ci=rand.nextInt()%this.chromosomes.size();
+                } while(this.IsInBest(ci));
+                this.chromosomes.remove(ci);
+                this.chromosomes.set(ci, offspring.get(j));
+                this.AddToBest(ci);
+            }
+            if(best != this.GetBestChromosome()) {
+                this.currentGeneration++;
+            }
+        }
     }
 }

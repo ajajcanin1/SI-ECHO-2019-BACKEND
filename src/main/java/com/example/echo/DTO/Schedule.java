@@ -6,12 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 
-enum AlgorithmState
-{
-    AS_USER_STOPED,
-    AS_CRITERIA_STOPPED,
-    AS_RUNNING
-};
+
 
 public class Schedule {
     private int numberOfCrossoverPoints;
