@@ -1,5 +1,5 @@
 package com.example.echo.Entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
@@ -82,7 +82,6 @@ public class Kabinet {
     public void setTermini(List<Raspored> termini) {
         this.termini = termini;
     }
-
     @ManyToMany
     @JoinTable(name = "predmet_kabinet", catalog = "", schema = "TYQcLL35gV", joinColumns = @JoinColumn(name = "idKabinet", referencedColumnName = "idKabinet"), inverseJoinColumns = @JoinColumn(name = "idPredmet", referencedColumnName = "id"))
     public List<Predmet> getPredmeti() {

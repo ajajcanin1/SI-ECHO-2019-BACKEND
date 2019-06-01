@@ -1,5 +1,5 @@
 package com.example.echo.Entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
@@ -101,7 +101,6 @@ public class Predmet {
         result = 31 * result + (opis != null ? opis.hashCode() : 0);
         return result;
     }
-
     @OneToMany(mappedBy = "predmet")
     public List<GrupaTermina> getGrupe() {
         return grupe;
@@ -110,7 +109,7 @@ public class Predmet {
     public void setGrupe(List<GrupaTermina> grupe) {
         this.grupe = grupe;
     }
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "predmeti")
     public List<Kabinet> getKabineti() {
         return kabineti;

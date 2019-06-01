@@ -28,6 +28,5 @@ public class UnosSaleKontroler {
     public void unesiSale(@RequestBody Kabinet data) {
         unosSaleRepository.save(data);
     }
-
-
+    
 }
