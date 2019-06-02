@@ -29,6 +29,7 @@ public class Schedule {
 
     static Configuration configuration = new Configuration();
     Random rand = new Random();
+    Algorithm instance = null;
 
 
     // Initializes chromosomes with configuration block (setup of chromosome)
@@ -364,6 +365,13 @@ public class Schedule {
 
         fitness = (float)score/(20*DAYS_NUM ); // NE VALJA --> Treba fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() * DAYS_NUM );
 
+    }
+    public Algorithm getInstance() {
+        if (instance==null) {
+            Schedule prototip=new Schedule(2,2,80,3);
+            instance=new Algorithm(100,8,5,prototip);
+        }
+        return instance;
     }
 }
 
