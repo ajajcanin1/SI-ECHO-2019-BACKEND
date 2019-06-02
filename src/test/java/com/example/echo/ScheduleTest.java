@@ -93,5 +93,10 @@ public class ScheduleTest {
         Schedule x = new Schedule(1,2,3,4);
         Assert.assertFalse(x.professorOverlaps());
     }
+    @Test
+    public void instancaAlgoritma() throws Exception {
+        Schedule x = new Schedule(1,2,3,4);
+        Assert.assertNotNull(x.getInstance());
+    }
 
 }
