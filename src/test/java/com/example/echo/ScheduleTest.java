@@ -88,5 +88,10 @@ public class ScheduleTest {
         System.out.println(x.getSlots().size());
         Assert.assertNotEquals(x, x.MakeNewFromPrototype());
     }
+    @Test
+    public void professorOverlaps() throws Exception {
+        Schedule x = new Schedule(1,2,3,4);
+        Assert.assertFalse(x.professorOverlaps());
+    }
 
 }

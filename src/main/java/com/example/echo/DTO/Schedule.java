@@ -196,6 +196,37 @@ public class Schedule {
         n.CalculateFitness();
         return n;
     }
+    public Boolean professorOverlaps() {
+        Boolean po = false;
+        int numberOfRooms = 2; // dodijeliti vrijednost dobivenu iz APIja
+        int daySize = DAY_HOURS * numberOfRooms;
+        for (Map.Entry<CourseClass, Integer> entry : classes.entrySet()) {
+            int p = entry.getValue();
+            int day = p / daySize;
+            int time = p % daySize;
+            time = time % DAY_HOURS;
+            int dur = entry.getKey().getDuration();
+            CourseClass cc = entry.getKey();
+
+            // check overlapping of classes for professors
+            for (int i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS) {
+                // for each hour of class
+                for (int j = dur - 1; j >= 0; j--) {
+                    // check for overlapping with other classes at same time
+                    List<CourseClass> pomocnaLista = slots.get(t + j);
+                    for (int k = 0; k < pomocnaLista.size(); k++) {
+                        CourseClass b = pomocnaLista.get(k);
+                        if (cc != b) {
+                            // professor overlaps?
+                            if (!po && cc.ProfessorOverlaps(b))
+                                po = true;
+                        }
+                    }
+                }
+            }
+        }
+        return po;
+    }
     //Kreira novi hromosom sa istim setupom, ali sa random odabranim kodom
     public Schedule MakeNewFromPrototype() {
         int size = this.slots.size();
@@ -367,5 +398,6 @@ public class Schedule {
         fitness = (float)score/(20*DAYS_NUM ); // NE VALJA --> Treba fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() * DAYS_NUM );
 
     }
+
 }
 
