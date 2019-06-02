@@ -215,20 +215,20 @@ public void AddToBest(int chromosomeIndex)
                 this.state=AlgorithmState.AS_CRITERIA_STOPPED;
                 break;
             }
-            Vector<Schedule> offspring=new Vector<Schedule>(this.replaceByGeneration);
+            Vector<Schedule> offspring=new Vector<Schedule>();
             for (int j=0; j<this.replaceByGeneration; j++) {
-                Schedule p1 = this.chromosomes.get(rand.nextInt()%this.chromosomes.size());
-                Schedule p2 = this.chromosomes.get(rand.nextInt()%this.chromosomes.size());
-                offspring.set(j,p1.Crossover((p2)));
+                Schedule p1 = this.chromosomes.get(Math.abs(rand.nextInt())%this.chromosomes.size());
+                Schedule p2 = this.chromosomes.get(Math.abs(rand.nextInt())%this.chromosomes.size());
+                offspring.add(j,p1.Crossover((p2)));
                 offspring.get(j).Mutation();
             }
             for (int j=0; j<this.replaceByGeneration; j++) {
                 int ci;
                 do {
-                    ci=rand.nextInt()%this.chromosomes.size();
+                    ci=Math.abs(rand.nextInt())%this.chromosomes.size();
                 } while(this.IsInBest(ci));
                 this.chromosomes.remove(ci);
-                this.chromosomes.set(ci, offspring.get(j));
+                this.chromosomes.add(ci, offspring.get(j));
                 this.AddToBest(ci);
             }
             if(best != this.GetBestChromosome()) {
