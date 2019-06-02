@@ -140,16 +140,21 @@ public class Schedule {
     // Performes crossover operation using to chromosomes and returns pointer to offspring
     public Schedule Crossover(Schedule parent2) {
 
-        if (rand.nextInt()%100 > this.crossoverProbability) {
+        if (Math.abs(rand.nextInt())%100 > this.crossoverProbability) {
             return new Schedule(this, false);
         }
         Schedule n = new Schedule(this, true);
         int size = this.classes.size();
+        //SIZE=0
+        if (size == 0)  {
+            n.CalculateFitness();
+            return n;
+        }
         ArrayList<Boolean> cp=new ArrayList(size);
 
         for (int i = this.numberOfCrossoverPoints; i>0; i--) {
             while (true) {
-                int p=rand.nextInt()%size;
+                int p=Math.abs(Math.abs(rand.nextInt()))%size;
                 if (!cp.get(p)) {
                     cp.add(p,true);
                     break;
@@ -162,7 +167,7 @@ public class Schedule {
         Map.Entry<CourseClass, Integer> it1 = mapChild.entrySet().iterator().next();
         Map.Entry<CourseClass, Integer> it2 = mapParent.entrySet().iterator().next();
 
-        Boolean first = rand.nextInt()%2 == 0;
+        Boolean first = Math.abs(rand.nextInt())%2 == 0;
         for(int i = 0; i < size; i++) {
             if(first) {
                 n.classes.put(it1.getKey(), it1.getValue());
@@ -199,9 +204,9 @@ public class Schedule {
         for(CourseClass it : c) {
             int nr = configuration.GetNumberOfRooms();
             int dur = it.getDuration();
-            int day = rand.nextInt()%DAYS_NUM;
-            int room = rand.nextInt()%nr;
-            int time = rand.nextInt()%(DAY_HOURS + 1 - dur);
+            int day = Math.abs(rand.nextInt())%DAYS_NUM;
+            int room = Math.abs(rand.nextInt())%nr;
+            int time = Math.abs(rand.nextInt())%(DAY_HOURS + 1 - dur);
             int pos = day * nr * DAY_HOURS + room * DAY_HOURS + time;
 
             for(int i = dur - 1; i >= 0; i--) {
@@ -213,52 +218,59 @@ public class Schedule {
         return newChromosome;
     }
     // Performs mutation on chromosome (provjeriti)
-    public void Mutation(){
-        //int random=rand.nextInt(1000);
-        int random=3; //hardkodirana vrijednost za testiranje, jer se radi sa random brojevima
+    public void Mutation() {
+        int random = Math.abs(rand.nextInt(100));
         // zbog uslova da random%100 mora bit < mutationProbability
         // test napisan kao da je random%100 < mutationProbability
-        if(random%100>mutationProbability)
-        return;
-        int numberOfClasses=classes.size();
-        for(int i=mutationSize; i>0; i--){
+        if (random % 100 > mutationProbability)
+            return;
+        int numberOfClasses = classes.size();
+        int size = this.slots.size();
+        //SIZE=0
+        if (size == 0) {
+            fitness = 1;
+            return;
+        }
+        for(int i = this.mutationSize; i>0; i--) {
             int mpos = random % numberOfClasses;
             int pos1 = 0;
-            int br=0;
-            CourseClass cc1=null;
-          for(CourseClass key :classes.keySet()){
-              if(br==mpos){
-                cc1=key;
-                pos1=classes.get(key);
-                break;
-              }
-              br++;
-          }
-          int nr= configuration.GetNumberOfRooms();
+
+            Map<CourseClass, Integer> h = this.classes;
+            Map.Entry<CourseClass, Integer> it = h.entrySet().iterator().next();
+
+            while(mpos > 0) {
+                mpos --;
+                it = h.entrySet().iterator().next();
+            }
+            pos1 = it.getValue();
+
+            CourseClass cc1 = it.getKey();
+          int nr = configuration.GetNumberOfRooms();
           int dur=cc1.getDuration();
           int day=random % DAYS_NUM;
           int room=random%nr;
           int time= random % ( DAY_HOURS + 1 - dur );
           int pos2 = day * nr * DAY_HOURS + room * DAY_HOURS + time;
           for(int j=dur-1; j>=0; j--){
-              if(pos1+j<slots.size()){
-              List<CourseClass> cl= slots.get(pos1+j);
-              for(int k=0; k<cl.size(); k++){
-                  if(cl.get(k)==cc1){
-                      cl.remove(k);
+
+              List<CourseClass> cl = slots.get(pos1+j);
+              Iterator it2 = cl.iterator();
+              while(it2.hasNext()) {
+                  if(it2.next() == cc1) {
+                      cl.remove(it2);
                       break;
                   }
               }
               List<CourseClass> nova= new ArrayList<>();
               nova.add(cc1);
-              slots.add(pos2+j, nova);
+              this.slots.add(pos2 + j, nova);
             }
-          }
-          classes.put(cc1, pos2);
+            this.classes.put(cc1, pos2);
         }
-        CalculateFitness(); //uradio Armin ali nije mergano
-        //kada se merga stvarno pozvati metodu
+        CalculateFitness();
     }
+
+
     void CalculateFitness()
     {
         // chromosome's score
