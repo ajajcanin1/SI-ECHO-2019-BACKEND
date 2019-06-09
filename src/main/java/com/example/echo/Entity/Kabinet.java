@@ -1,5 +1,5 @@
 package com.example.echo.Entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,8 +7,9 @@ import java.util.List;
 public class Kabinet {
     private int idKabinet;
     private Integer kapacitet;
-    private String namjena;
-    private List<Raspored> termini;
+    private String naziv;
+    private Boolean namjena;
+   private List<Raspored> termini;
     private List<Predmet> predmeti;
 
     @Id
@@ -30,14 +31,22 @@ public class Kabinet {
     public void setKapacitet(Integer kapacitet) {
         this.kapacitet = kapacitet;
     }
-
+    @Basic
+    @Column(name = "naziv")
+    public String getNaziv() {
+        return naziv;
+    }
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+    
     @Basic
     @Column(name = "namjena")
-    public String getNamjena() {
+    public Boolean getNamjena() {
         return namjena;
     }
 
-    public void setNamjena(String namjena) {
+    public void setNamjena(Boolean namjena) {
         this.namjena = namjena;
     }
 
@@ -50,6 +59,7 @@ public class Kabinet {
 
         if (idKabinet != kabinet.idKabinet) return false;
         if (kapacitet != null ? !kapacitet.equals(kabinet.kapacitet) : kabinet.kapacitet != null) return false;
+        if (naziv != null ? !naziv.equals(kabinet.naziv) : kabinet.naziv != null) return false;
         if (namjena != null ? !namjena.equals(kabinet.namjena) : kabinet.namjena != null) return false;
 
         return true;
@@ -60,6 +70,7 @@ public class Kabinet {
         int result = idKabinet;
         result = 31 * result + (kapacitet != null ? kapacitet.hashCode() : 0);
         result = 31 * result + (namjena != null ? namjena.hashCode() : 0);
+        result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
         return result;
     }
 
@@ -71,7 +82,6 @@ public class Kabinet {
     public void setTermini(List<Raspored> termini) {
         this.termini = termini;
     }
-
     @ManyToMany
     @JoinTable(name = "predmet_kabinet", catalog = "", schema = "TYQcLL35gV", joinColumns = @JoinColumn(name = "idKabinet", referencedColumnName = "idKabinet"), inverseJoinColumns = @JoinColumn(name = "idPredmet", referencedColumnName = "id"))
     public List<Predmet> getPredmeti() {

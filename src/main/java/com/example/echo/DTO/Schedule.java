@@ -6,12 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 
-enum AlgorithmState
-{
-    AS_USER_STOPED,
-    AS_CRITERIA_STOPPED,
-    AS_RUNNING
-};
+
 
 public class Schedule {
     private int numberOfCrossoverPoints;
@@ -29,6 +24,7 @@ public class Schedule {
 
     static Configuration configuration = new Configuration();
     Random rand = new Random();
+    Algorithm instance=null;
 
 
     // Initializes chromosomes with configuration block (setup of chromosome)
@@ -127,6 +123,7 @@ public class Schedule {
             int newCriteriaSize = 5 * configuration.GetNumberOfCourseClasses();
             this.slots=new ArrayList<List<CourseClass>>(newSlotsSize);
             this.criteria=new ArrayList<Boolean>(newCriteriaSize);
+            this.classes = new HashMap<CourseClass, Integer>(); // Stavljeno radi testa MakeNewFromPrototype.
 
         }
         this.numberOfCrossoverPoints = c.numberOfCrossoverPoints;
@@ -144,16 +141,21 @@ public class Schedule {
     // Performes crossover operation using to chromosomes and returns pointer to offspring
     public Schedule Crossover(Schedule parent2) {
 
-        if (rand.nextInt()%100 > this.crossoverProbability) {
+        if (Math.abs(rand.nextInt())%100 > this.crossoverProbability) {
             return new Schedule(this, false);
         }
         Schedule n = new Schedule(this, true);
         int size = this.classes.size();
+        //SIZE=0
+        if (size == 0)  {
+            n.CalculateFitness();
+            return n;
+        }
         ArrayList<Boolean> cp=new ArrayList(size);
 
-        for (int i = this.numberOfCrossoverPoints; i>0; i++) {
+        for (int i = this.numberOfCrossoverPoints; i>0; i--) {
             while (true) {
-                int p=rand.nextInt()%size;
+                int p=Math.abs(Math.abs(rand.nextInt()))%size;
                 if (!cp.get(p)) {
                     cp.add(p,true);
                     break;
@@ -166,7 +168,7 @@ public class Schedule {
         Map.Entry<CourseClass, Integer> it1 = mapChild.entrySet().iterator().next();
         Map.Entry<CourseClass, Integer> it2 = mapParent.entrySet().iterator().next();
 
-        Boolean first = rand.nextInt()%2 == 0;
+        Boolean first = Math.abs(rand.nextInt())%2 == 0;
         for(int i = 0; i < size; i++) {
             if(first) {
                 n.classes.put(it1.getKey(), it1.getValue());
@@ -195,6 +197,37 @@ public class Schedule {
         n.CalculateFitness();
         return n;
     }
+    public Boolean professorOverlaps() {
+        Boolean po = false;
+        int numberOfRooms = 2; // dodijeliti vrijednost dobivenu iz APIja
+        int daySize = DAY_HOURS * numberOfRooms;
+        for (Map.Entry<CourseClass, Integer> entry : classes.entrySet()) {
+            int p = entry.getValue();
+            int day = p / daySize;
+            int time = p % daySize;
+            time = time % DAY_HOURS;
+            int dur = entry.getKey().getDuration();
+            CourseClass cc = entry.getKey();
+
+            // check overlapping of classes for professors
+            for (int i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS) {
+                // for each hour of class
+                for (int j = dur - 1; j >= 0; j--) {
+                    // check for overlapping with other classes at same time
+                    List<CourseClass> pomocnaLista = slots.get(t + j);
+                    for (int k = 0; k < pomocnaLista.size(); k++) {
+                        CourseClass b = pomocnaLista.get(k);
+                        if (cc != b) {
+                            // professor overlaps?
+                            if (!po && cc.ProfessorOverlaps(b))
+                                po = true;
+                        }
+                    }
+                }
+            }
+        }
+        return po;
+    }
     //Kreira novi hromosom sa istim setupom, ali sa random odabranim kodom
     public Schedule MakeNewFromPrototype() {
         int size = this.slots.size();
@@ -203,9 +236,9 @@ public class Schedule {
         for(CourseClass it : c) {
             int nr = configuration.GetNumberOfRooms();
             int dur = it.getDuration();
-            int day = rand.nextInt()%DAYS_NUM;
-            int room = rand.nextInt()%nr;
-            int time = rand.nextInt()%(DAY_HOURS + 1 - dur);
+            int day = Math.abs(rand.nextInt())%DAYS_NUM;
+            int room = Math.abs(rand.nextInt())%nr;
+            int time = Math.abs(rand.nextInt())%(DAY_HOURS + 1 - dur);
             int pos = day * nr * DAY_HOURS + room * DAY_HOURS + time;
 
             for(int i = dur - 1; i >= 0; i--) {
@@ -213,56 +246,63 @@ public class Schedule {
             }
             newChromosome.classes.put(it, pos);
         }
-        //newChromosome.CalculateFitness();
+        newChromosome.CalculateFitness();
         return newChromosome;
     }
     // Performs mutation on chromosome (provjeriti)
-    public void Mutation(){
-        //int random=rand.nextInt(1000);
-        int random=3; //hardkodirana vrijednost za testiranje, jer se radi sa random brojevima
+    public void Mutation() {
+        int random = Math.abs(rand.nextInt(100));
         // zbog uslova da random%100 mora bit < mutationProbability
         // test napisan kao da je random%100 < mutationProbability
-        if(random%100>mutationProbability)
-        return;
-        int numberOfClasses=classes.size();
-        for(int i=mutationSize; i>0; i--){
+        if (random % 100 > mutationProbability)
+            return;
+        int numberOfClasses = classes.size();
+        int size = this.slots.size();
+        //SIZE=0
+        if (size == 0) {
+            fitness = 1;
+            return;
+        }
+        for(int i = this.mutationSize; i>0; i--) {
             int mpos = random % numberOfClasses;
             int pos1 = 0;
-            int br=0;
-            CourseClass cc1=null;
-          for(CourseClass key :classes.keySet()){
-              if(br==mpos){
-                cc1=key;
-                pos1=classes.get(key);
-                break;
-              }
-              br++;
-          }
-          int nr= configuration.GetNumberOfRooms();
+
+            Map<CourseClass, Integer> h = this.classes;
+            Map.Entry<CourseClass, Integer> it = h.entrySet().iterator().next();
+
+            while(mpos > 0) {
+                mpos --;
+                it = h.entrySet().iterator().next();
+            }
+            pos1 = it.getValue();
+
+            CourseClass cc1 = it.getKey();
+          int nr = configuration.GetNumberOfRooms();
           int dur=cc1.getDuration();
           int day=random % DAYS_NUM;
           int room=random%nr;
           int time= random % ( DAY_HOURS + 1 - dur );
           int pos2 = day * nr * DAY_HOURS + room * DAY_HOURS + time;
           for(int j=dur-1; j>=0; j--){
-              if(pos1+j<slots.size()){
-              List<CourseClass> cl= slots.get(pos1+j);
-              for(int k=0; k<cl.size(); k++){
-                  if(cl.get(k)==cc1){
-                      cl.remove(k);
+
+              List<CourseClass> cl = slots.get(pos1+j);
+              Iterator it2 = cl.iterator();
+              while(it2.hasNext()) {
+                  if(it2.next() == cc1) {
+                      cl.remove(it2);
                       break;
                   }
               }
               List<CourseClass> nova= new ArrayList<>();
               nova.add(cc1);
-              slots.add(pos2+j, nova);
+              this.slots.add(pos2 + j, nova);
             }
-          }
-          classes.put(cc1, pos2);
+            this.classes.put(cc1, pos2);
         }
-        //CalculateFitness(); //uradio Armin ali nije mergano
-        //kada se merga stvarno pozvati metodu
+        CalculateFitness();
     }
+
+
     void CalculateFitness()
     {
         // chromosome's score
@@ -271,97 +311,101 @@ public class Schedule {
         int daySize = DAY_HOURS * numberOfRooms;
         int ci = 0;
         // check criterias and calculate scores for each class in schedule
-        for (Map.Entry<CourseClass, Integer> entry : classes.entrySet()) {
-            int p = entry.getValue();
-            int day = p / daySize;
-            int time = p % daySize;
-            int room = time / DAY_HOURS;
-            time = time % DAY_HOURS;
 
-            int dur = entry.getKey().getDuration();
+        //if(classes.size()!=0) {
+            for (Map.Entry<CourseClass, Integer> entry : classes.entrySet()) {
+                int p = entry.getValue();
+                int day = p / daySize;
+                int time = p % daySize;
+                int room = time / DAY_HOURS;
+                time = time % DAY_HOURS;
 
-            // check for room overlapping of classes
-            Boolean ro = false;
-            for( int i = dur - 1; i >= 0; i-- )
-            {
-                if( slots.get( p + i ).size() > 1 )
-                {
-                    ro = true;
-                    break;
+                int dur = entry.getKey().getDuration();
+
+                // check for room overlapping of classes
+                Boolean ro = false;
+                for (int i = dur - 1; i >= 0; i--) {
+                    if (slots.get(p + i).size() > 1) {
+                        ro = true;
+                        break;
+                    }
                 }
-            }
-            // on room overlaping
-            if( !ro )
-                score++;
+                // on room overlaping
+                if (!ro)
+                    score++;
 
-            criteria.set(ci,!ro);
+                criteria.set(ci, !ro);
 
-            CourseClass cc= entry.getKey();
-            Room r=new Room(1545,"S0",false,50); // OVO NE VALJA --> Treba dobiti Room by ID (room)
+                CourseClass cc = entry.getKey();
+                Room r = new Room(1545, "S0", false, 50); // OVO NE VALJA --> Treba dobiti Room by ID (room)
 
-            Boolean pomocnaVarijabla=false;
-            // does current room have enough seats
-            if(r.getNumberOfSeats() >= cc.getNumberOfSeats())
-                pomocnaVarijabla=true;
+                Boolean pomocnaVarijabla = false;
+                // does current room have enough seats
+                if (r.getNumberOfSeats() >= cc.getNumberOfSeats())
+                    pomocnaVarijabla = true;
 
-            criteria.set( ci + 1,pomocnaVarijabla );
+                criteria.set(ci + 1, pomocnaVarijabla);
 
-            if( criteria.get( ci + 1 ) )
-                score++;
-            // does current room have computers if they are required
-            criteria.set(ci+2,!cc.getRequiresLab() || ( cc.getRequiresLab() && r.getLab() ));
-            if( criteria.get( ci + 2 ) )
-                score++;
+                if (criteria.get(ci + 1))
+                    score++;
+                // does current room have computers if they are required
+                criteria.set(ci + 2, !cc.getRequiresLab() || (cc.getRequiresLab() && r.getLab()));
+                if (criteria.get(ci + 2))
+                    score++;
 
-            Boolean po=false, go=false,idi=false;
-            // check overlapping of classes for professors and student groups
-            for( int i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS )
-            {
-                // for each hour of class
-                for( int j = dur - 1; j >= 0; j-- )
-                {
-                    // check for overlapping with other classes at same time
-                    List<CourseClass> pomocnaLista= slots.get(t+j);
-                    for(int k=0;k<pomocnaLista.size();k++)
-                    {
-                        CourseClass b=pomocnaLista.get(k);
-                        if(cc!=b)
-                        {
-                            // professor overlaps?
-                            if( !po && cc.ProfessorOverlaps(b) )
-                                po = true;
+                Boolean po = false, go = false, idi = false;
+                // check overlapping of classes for professors and student groups
+                for (int i = numberOfRooms, t = day * daySize + time; i > 0; i--, t += DAY_HOURS) {
+                    // for each hour of class
+                    for (int j = dur - 1; j >= 0; j--) {
+                        // check for overlapping with other classes at same time
+                        List<CourseClass> pomocnaLista = slots.get(t + j);
+                        for (int k = 0; k < pomocnaLista.size(); k++) {
+                            CourseClass b = pomocnaLista.get(k);
+                            if (cc != b) {
+                                // professor overlaps?
+                                if (!po && cc.ProfessorOverlaps(b))
+                                    po = true;
 
-                            // student group overlaps?
-                            if( !go && cc.groupsOverlap( b ) )
-                                go = true;
+                                // student group overlaps?
+                                if (!go && cc.groupsOverlap(b))
+                                    go = true;
 
-                            // both type of overlapping? no need to check more
-                            if( po && go )
-                                idi=true;
+                                // both type of overlapping? no need to check more
+                                if (po && go)
+                                    idi = true;
+                            }
+                            if (idi)
+                                break;
                         }
-                        if( idi )
+                        if (idi)
                             break;
                     }
-                    if( idi )
+                    if (idi)
                         break;
                 }
-                if( idi )
-                    break;
+                // professors have no overlaping classes?
+                if (!po)
+                    score++;
+                criteria.set(ci + 3, !po);
+                // student groups has no overlaping classes?
+                if (!go)
+                    score++;
+                criteria.set(ci + 4, !go);
+
+                ci += 5;
             }
-            // professors have no overlaping classes?
-            if( !po )
-                score++;
-            criteria.set(ci+3,!po);
-            // student groups has no overlaping classes?
-            if( !go )
-                score++;
-            criteria.set( ci + 4,!go);
-
-            ci += 5;
-        }
-
+        //}
         fitness = (float)score/(20*DAYS_NUM ); // NE VALJA --> Treba fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() * DAYS_NUM );
 
+    }
+
+    public Algorithm getInstance() {
+        if (instance==null) {
+            Schedule prototip=new Schedule(2,2,80,3);
+            instance=new Algorithm(100,8,5,prototip);
+        }
+        return instance;
     }
 }
 
