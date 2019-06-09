@@ -5,20 +5,20 @@ import com.example.echo.Repository.KorisnikRepository;
 import com.example.echo.Specification.KorisnikSpecification;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/si2019/echo")
+@RequestMapping(value="api/si2019/echo")
 public class KorisnikController {
     private KorisnikRepository korisnikRepository;
 
@@ -26,7 +26,12 @@ public class KorisnikController {
         this.korisnikRepository = korisnikRepository;
     }
 
-    @RequestMapping("/getTeachingStaff")
+    @ApiOperation(value = "Get a list of professors and assistents")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message="Successfully retrieved list"),
+            @ApiResponse(code = 400, message="The request was invalid or cannot be otherwise served."),
+    })
+    @RequestMapping(value = "/getTeachingStaff",  method = RequestMethod.GET)
     public ResponseEntity getTeachingStaff(@RequestBody String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(data);
