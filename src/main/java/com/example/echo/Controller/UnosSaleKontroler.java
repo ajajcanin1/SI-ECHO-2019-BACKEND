@@ -28,8 +28,27 @@ public class UnosSaleKontroler {
     public void unesiSale(@RequestBody Kabinet data) {
         unosSaleRepository.save(data);
     }
+
     @GetMapping(value="/sveSale")
     public List<Kabinet> getAll() {
         return (List<Kabinet>) unosSaleRepository.sviKabineti();
+    }
+
+   @PostMapping("/obrisiSalu")
+   public void obrisiSalu(@RequestBody String id) {
+       ObjectMapper objectMapper = new ObjectMapper();
+       try{
+           JsonNode jsonNode = objectMapper.readTree(id);
+           String id_kabineta = jsonNode.get("id").asText();
+           
+           Integer result = Integer.parseInt(id_kabineta);
+           System.out.println("Obrisi" + result);
+           unosSaleRepository.obrisiSalu(result);
+       }
+
+       catch(IOException io) {
+           System.out.println("Nije nista uradjeno..");
+       }
+       
    }
 }
