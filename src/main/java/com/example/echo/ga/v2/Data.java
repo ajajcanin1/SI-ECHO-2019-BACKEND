@@ -127,7 +127,142 @@ public class Data {
 		MeetingTime meetingTime54= new MeetingTime(54, "UTO","11:00 - 14:00", 6);
 		MeetingTime meetingTime55 = new MeetingTime(55, "PON","12:00 - 15:00", 6);
 		MeetingTime meetingTime56 = new MeetingTime(56, "PET","09:00 - 12:00", 6);
+		//Asistenti
+		MeetingTime meetingTime57 = new MeetingTime(57, "PON","09:00 - 10:00", 7);
+		MeetingTime meetingTime58= new MeetingTime(58, "SRI","10:00 - 11:00", 7);
+		MeetingTime meetingTime59 = new MeetingTime(59, "SRI","12:00 - 13:00", 7);
+		MeetingTime meetingTime60 = new MeetingTime(60, "SRI","13:00 - 14:00", 7);
 
+		MeetingTime meetingTime65 = new MeetingTime(65, "PON","10:00 - 11:00", 8);
+		MeetingTime meetingTime66= new MeetingTime(66, "UTO","15:00 - 16:00", 8);
+		MeetingTime meetingTime67 = new MeetingTime(67, "UTO","16:00 - 17:00", 8);
+		MeetingTime meetingTime68 = new MeetingTime(68, "UTO","17:00 - 18:00", 8);
+
+		MeetingTime meetingTime69 = new MeetingTime(69, "CET","09:00 - 10:00", 9);
+		MeetingTime meetingTime70= new MeetingTime(70, "CET","10:00 - 11:00", 9);
+		MeetingTime meetingTime71 = new MeetingTime(71, "PET","12:00 - 13:00", 9);
+		MeetingTime meetingTime72 = new MeetingTime(72, "PET","13:00 - 14:00", 9);
+
+		MeetingTime meetingTime73 = new MeetingTime(73, "CET","18:00 - 19:00", 10);
+		MeetingTime meetingTime74= new MeetingTime(74, "CET","19:00 - 20:00", 10);
+		MeetingTime meetingTime75 = new MeetingTime(75, "PON","18:00 - 19:00", 10);
+		MeetingTime meetingTime76 = new MeetingTime(76, "PET","19:00 - 20:00", 10);
+
+		MeetingTime meetingTime77 = new MeetingTime(77, "UTO","17:00 - 18:00", 11);
+		MeetingTime meetingTime78= new MeetingTime(78, "SRI","17:00 - 18:00", 11);
+		MeetingTime meetingTime79 = new MeetingTime(79, "CET","15:00 - 16:00", 11);
+		MeetingTime meetingTime80 = new MeetingTime(80, "PET","08:00 - 09:00", 11);
+
+
+		MeetingTime meetingTime85 = new MeetingTime(85, "PON","09:00 - 10:00", 13);
+		MeetingTime meetingTime86= new MeetingTime(86, "UTO","12:00 - 13:00", 13);
+		MeetingTime meetingTime87 = new MeetingTime(87, "SRI","13:00 - 14:00", 13);
+		MeetingTime meetingTime88 = new MeetingTime(88, "PET","14:00 - 15:00", 13);
+
+		winterMeetingTimes = new ArrayList<MeetingTime>(Arrays.asList(meetingTime33,meetingTime34,meetingTime35,meetingTime36,meetingTime37,meetingTime38,meetingTime39
+				,meetingTime40,meetingTime41,meetingTime42,meetingTime43,meetingTime44,meetingTime45,meetingTime46,meetingTime47,meetingTime48,meetingTime49,meetingTime50
+				,meetingTime51,meetingTime52,meetingTime53,meetingTime54,meetingTime55,meetingTime56,meetingTime57,meetingTime58,meetingTime59,meetingTime60,meetingTime65
+				,meetingTime66,meetingTime67,meetingTime68,meetingTime69,meetingTime70,meetingTime71,meetingTime72,meetingTime73,meetingTime74,meetingTime75,meetingTime76,meetingTime77
+				,meetingTime78,meetingTime79,meetingTime80, meetingTime85, meetingTime86, meetingTime87, meetingTime88));
+
+		//RI-ljetnjji semestar zeljeni termini
+		MeetingTime meetingTime1 = new MeetingTime(1, "PON","12:00 - 15:00", 23);
+		MeetingTime meetingTime2 = new MeetingTime(2, "UTO","12:00 - 15:00", 23);
+		MeetingTime meetingTime3 = new MeetingTime(3, "SRI","12:00 - 15:00", 23);
+		MeetingTime meetingTime4 = new MeetingTime(4, "CET","12:00 - 15:00", 23);
+
+		MeetingTime meetingTime5 = new MeetingTime(5, "SRI","09:00 - 12:00", 24);
+		MeetingTime meetingTime6 = new MeetingTime(6, "CET","09:00 - 12:00", 24);
+		MeetingTime meetingTime7 = new MeetingTime(7, "CET","12:00 - 15:00", 24);
+		MeetingTime meetingTime8 = new MeetingTime(8, "PET","12:00 - 15:00", 24);
+
+		MeetingTime meetingTime9 = new MeetingTime(9, "UTO","09:00 - 12:00", 26);
+		MeetingTime meetingTime10 = new MeetingTime(10, "SRI","09:00 - 12:00", 26);
+		MeetingTime meetingTime11 = new MeetingTime(11, "CET","09:00 - 12:00", 26);
+		MeetingTime meetingTime12 = new MeetingTime(12, "PET","09:00 - 12:00", 26);
+
+		MeetingTime meetingTime13 = new MeetingTime(13, "PON","15:00 - 16:00", 28);
+		MeetingTime meetingTime14 = new MeetingTime(14, "UTO","15:00 - 16:00", 28);
+		MeetingTime meetingTime15 = new MeetingTime(15, "SRI","15:00 - 16:00", 28);
+		MeetingTime meetingTime16 = new MeetingTime(16, "CET","15:00 - 16:00", 28);
+
+		MeetingTime meetingTime17 = new MeetingTime(17, "PET","16:00 - 17:00", 29);
+		MeetingTime meetingTime18 = new MeetingTime(18, "CET","16:00 - 17:00", 29);
+		MeetingTime meetingTime19 = new MeetingTime(19, "SRI","08:00 - 09:00", 29);
+		MeetingTime meetingTime20 = new MeetingTime(20, "SRI","08:00 - 09:00", 29);
+
+		MeetingTime meetingTime21 = new MeetingTime(21, "PON","16:00 - 17:00", 30);
+		MeetingTime meetingTime22 = new MeetingTime(22, "PON","17:00 - 18:00", 30);
+		MeetingTime meetingTime23 = new MeetingTime(23, "PON","18:00 - 19:00", 30);
+		MeetingTime meetingTime24 = new MeetingTime(24, "UTO","18:00 - 19:00", 30);
+
+		MeetingTime meetingTime25 = new MeetingTime(25, "SRI","16:00 - 17:00", 31);
+		MeetingTime meetingTime26 = new MeetingTime(26, "CET","17:00 - 18:00", 31);
+		MeetingTime meetingTime27 = new MeetingTime(27, "PET","17:00 - 18:00", 31);
+		MeetingTime meetingTime28 = new MeetingTime(28, "PET","18:00 - 19:00", 31);
+
+		MeetingTime meetingTime29 = new MeetingTime(29, "CET","08:00 - 09:00", 32);
+		MeetingTime meetingTime30 = new MeetingTime(30, "CET","15:00 - 16:00", 32);
+		MeetingTime meetingTime31 = new MeetingTime(31, "PET","15:00 - 16:00", 32);
+		MeetingTime meetingTime32 = new MeetingTime(32, "PET","16:00 - 17:00", 32);
+
+		//Profesori prva godina-NN
+		MeetingTime meetingTime61 = new MeetingTime(61, "PON","09:00 - 12:00", 12);
+		MeetingTime meetingTime62 = new MeetingTime(62, "UTO","09:00 - 12:00", 12);
+		MeetingTime meetingTime63 = new MeetingTime(63, "SRI","09:00 - 12:00", 12);
+		MeetingTime meetingTime64 = new MeetingTime(64, "CET","09:00 - 12:00", 12);
+
+
+		summerMeetingTimes= new ArrayList<MeetingTime>(Arrays.asList(meetingTime1, meetingTime2, meetingTime3, meetingTime4, meetingTime5, meetingTime6, meetingTime7, meetingTime8,
+				meetingTime9, meetingTime10, meetingTime11, meetingTime12, meetingTime13, meetingTime14, meetingTime15, meetingTime16, meetingTime17, meetingTime18,
+				meetingTime19, meetingTime20, meetingTime21, meetingTime22, meetingTime23, meetingTime24, meetingTime25, meetingTime26, meetingTime27, meetingTime28,
+				meetingTime29, meetingTime30, meetingTime31, meetingTime32, meetingTime61, meetingTime62, meetingTime63, meetingTime64));
+
+
+		//uzimati iz baze - Predmeti
+		//ZIMSKI
+		//5. semestar ri
+		Course course1 = new Course("VVS", "Verifikacija i validacija softvera", new ArrayList<Professor>(Arrays.asList(professor1, professor7)), 100);
+		Course course2 = new Course("OIS", "Osnove informacionih sistema", new ArrayList<Professor>(Arrays.asList(professor2, professor8)), 100);
+		Course course3 = new Course("RMS", "Računarsko modeliranje i simulacija", new ArrayList<Professor>(Arrays.asList(professor3, professor9)), 100);
+		Course course4 = new Course("RG", "Računarska grafika", new ArrayList<Professor>(Arrays.asList(professor4, professor10)), 100);
+		Course course5 = new Course("WT", "Web tehnologije", new ArrayList<Professor>(Arrays.asList(professor5, professor11)), 100);
+		Course course6 = new Course("OOI", "Osnove operacionih istraživanja", new ArrayList<Professor>(Arrays.asList(professor6, professor13)), 100);
+
+		//LJETNJi
+		//6. semestar ri
+		Course course33 = new Course("SI", "Softver inženjering", new ArrayList<Professor>(Arrays.asList(professor12, professor32)), 100);
+		Course course34 = new Course("PIS", "Projektovanje informacionih sistema", new ArrayList<Professor>(Arrays.asList(professor23, professor29, professor28)), 100);
+		Course course35 = new Course("VI", "Vještačka inteligencija", new ArrayList<Professor>(Arrays.asList(professor24, professor30)), 100);
+
+		Course course37 = new Course("ARM", "Administracija raČunarskih mreŽa", new ArrayList<Professor>(Arrays.asList(professor26, professor31)), 100);
+
+		summerCourses = new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37));
+
+		winterCourses = new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6));
+
+		//Studentske grupe-zimski
+		StudentsGroup group1 = new StudentsGroup(1, "RI3", 100, false, new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+		StudentsGroup group2 = new StudentsGroup(2, "L1", 25, true, new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+		StudentsGroup group3 = new StudentsGroup(3, "L2", 25, true, new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+		StudentsGroup group4 = new StudentsGroup(4, "L3", 25, true, new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+		StudentsGroup group5 = new StudentsGroup(5, "L4", 25, true, new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+
+
+		//Studentske grupe-ljetnji
+		StudentsGroup group19 = new StudentsGroup(19, "RI3", 100, false, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
+		StudentsGroup group20 = new StudentsGroup(20, "L1", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
+		StudentsGroup group21 = new StudentsGroup(21, "L2", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
+		StudentsGroup group22 = new StudentsGroup(22, "L3", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
+		StudentsGroup group23 = new StudentsGroup(23, "L4", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
+
+		studentsGroups = new ArrayList<StudentsGroup>(Arrays.asList(group1, group2, group3, group4, group5));
+
+		//Odsjeci
+		Department dept = new Department("RI3", new ArrayList<Course>(Arrays.asList(course1, course2, course3, course4, course5, course6)));
+
+		depts = new ArrayList<Department>(Arrays.asList(dept));
+		depts.forEach(x -> numberOfClasses += x.getCourses().size());
 
 
 		return this;
