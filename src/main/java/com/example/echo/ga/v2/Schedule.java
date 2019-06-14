@@ -20,27 +20,31 @@ public class Schedule {
 		classes = new ArrayList<Class>(data.getNumberOfClasses());
 	}
 	public Schedule initialize() {
+
 		new ArrayList<Department>(data.getDepts()).forEach(dept -> {
-			dept.getCourses().forEach(course -> {
-				Class newClass = new Class(classNumb++, dept, course);
-				//newClass.setMeetingTime(data.getMeetingTimes().get((int) (data.getMeetingTimes().size() * Math.random())));
-				for(MeetingTime mt : data.getMeetingTimes()) {
-					course.getProfessors().forEach(p -> {
-						if(p.getId() == mt.getId()) {
-							newClass.setMeetingTime(mt);
-						}
-					});
-				}
 				data.getStudentsGroups().forEach(sg -> {
-					sg.getCourses().forEach(c -> {
-						if(c.getName() == course.getName()) {
-							newClass.setStudentsGroup(sg);
+					sg.getCourses().forEach(course -> {
+						Class newClass = new Class(classNumb++, dept, course); //ne treba
+						ArrayList<MeetingTime> mtRandom = new ArrayList<>();
+						for(MeetingTime mt : data.getMeetingTimes()) {
+							course.getProfessors().forEach(p -> {
+								if(p.getId() == mt.getIdProf() && p.isAssistent() == sg.isLabGroup())
+									mtRandom.add(mt);
+							});
 						}
-					});
+
+						newClass.setMeetingTime(mtRandom.get((int) (mtRandom.size() * Math.random())));
+						newClass.setStudentsGroup(sg);
+						newClass.setRoom(data.getRooms().get((int) (data.getRooms().size() * Math.random())));
+
+						ArrayList<Professor> profRandom = new ArrayList<>();
+						for(Professor p: course.getProfessors()) {
+							if(p.isAssistent() == sg.isLabGroup())
+								profRandom.add(p);
+						}
+						newClass.setProfessor(profRandom.get((int) (profRandom.size() * Math.random())));
+						classes.add(newClass);
 				});
-				newClass.setRoom(data.getRooms().get((int) (data.getRooms().size() * Math.random())));
-				newClass.setProfessor(course.getProfessors().get((int)(course.getProfessors().size() * Math.random())));
-				classes.add(newClass);
 			});
 		});
 		return this;
@@ -61,8 +65,11 @@ public class Schedule {
 		numbOfConflicts = 0;
 		classes.forEach(x -> {
 			if (x.getRoom().getSeatingCapacity() < x.getStudentsGroup().getNumberOfStudents()) numbOfConflicts++;
+			if(x.getRoom().isLab() != x.getStudentsGroup().isLabGroup()) numbOfConflicts++;
 			classes.stream().filter(y -> classes.indexOf(y) >= classes.indexOf(x)).forEach(y -> {
-				if (x.getMeetingTime() == y.getMeetingTime() && x.getId() != y.getId()) {
+				if (x.getMeetingTime().getDay() == y.getMeetingTime().getDay()
+						&& x.getMeetingTime().getTime() == y.getMeetingTime().getTime()
+						&& x.getId() != y.getId()) {
 					if (x.getRoom() == y.getRoom()) numbOfConflicts++;
                     if (x.getProfessor() == y.getProfessor()) numbOfConflicts++;
 				}

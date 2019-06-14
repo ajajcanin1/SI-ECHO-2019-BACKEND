@@ -1,7 +1,5 @@
 package com.example.echo.ga.v2.Domain;
 
-import java.util.ArrayList;
-
 public class Class {
 	private int id;
     private Department dept;

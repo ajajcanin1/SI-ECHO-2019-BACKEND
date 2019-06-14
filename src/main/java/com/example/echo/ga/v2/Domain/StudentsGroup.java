@@ -6,6 +6,7 @@ public class StudentsGroup {
     private int id;
     private String name;
     private int numberOfStudents;
+    private boolean labGroup;
     private ArrayList<Course> courses;
 
     public void setId(int id) { this.id = id; }
@@ -16,12 +17,15 @@ public class StudentsGroup {
     public int getId() { return id; }
     public String getName() { return name; }
     public int getNumberOfStudents() { return numberOfStudents; }
+    public boolean isLabGroup() { return labGroup; }
+
     public ArrayList<Course> getCourses() { return courses; }
 
-    public StudentsGroup(int id, String name, int numberOfStudents, ArrayList<Course> courses) {
+    public StudentsGroup(int id, String name, int numberOfStudents, boolean labGroup, ArrayList<Course> courses) {
         this.id = id;
         this.name = name;
         this.numberOfStudents = numberOfStudents;
+        this.labGroup = labGroup;
         this.courses = courses;
     }
 }

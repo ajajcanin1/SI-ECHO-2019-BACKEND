@@ -19,21 +19,21 @@ public class Driver {
 		driver.data = new Data();
 		int generationNumber = 0;
 		driver.printAvailableData();
-		/*System.out.println("> Generation # "+generationNumber);
+		System.out.println("> Generation # "+generationNumber);
     	System.out.print("  Schedule # |                                           ");
     	System.out.print("Classes [dept,class,room,instructor,meeting-time]       ");
     	System.out.println( "                                  | Fitness | Conflicts");
     	System.out.print("-----------------------------------------------------------------------------------");
-    	System.out.println("-------------------------------------------------------------------------------------");*/
+    	System.out.println("-------------------------------------------------------------------------------------");
     	GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(driver.data);
     	Population population = new Population(Driver.POPULATION_SIZE, driver.data).sortByFitness();
-    	/*population.getSchedules().forEach(schedule -> System.out.println("       "+driver.scheduleNumb++ +
+    	population.getSchedules().forEach(schedule -> System.out.println("       "+driver.scheduleNumb++ +
 													                     "     | "+ schedule + " | " +
 													                     String.format("%.5f",schedule.getFitness()) +
-													                     " | "+schedule.getNumbOfConflicts()));*/
+													                     " | "+schedule.getNumbOfConflicts()));
     	driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
     	driver.classNumb = 1;
-        /*while (population.getSchedules().get(0).getFitness() != 1.0) {
+        while (population.getSchedules().get(0).getFitness() != 1.0) {
         	System.out.println("> Generation # "+ ++generationNumber);
         	System.out.print("  Schedule # |                                           ");
         	System.out.print("Classes [dept,class,room,instructor,meeting-time]       ");
@@ -50,32 +50,33 @@ public class Driver {
             driver.classNumb = 1;
         }
 
-         */
+
 	}
 	private void printScheduleAsTable(Schedule schedule, int generation) {
         ArrayList<Class> classes = schedule.getClasses();
         System.out.print("\n                       ");
-        System.out.println("Redni broj | Odsjek | Predmet (id, broj studenata) | Sala (Kapacitet) |   Profesor   |  Vrijeme ");
+        System.out.println("Redni broj | Grupa | Predmet (id, broj studenata) | Sala (Kapacitet) |   Profesor   |  Vrijeme ");
         System.out.print("                       ");
         System.out.print("------------------------------------------------------");
         System.out.println("---------------------------------------------------------------");
         classes.forEach(x -> {
-        	int majorIndex = data.getDepts().indexOf(x.getDept());
+			int majorIndex = data.getStudentsGroups().indexOf(x.getStudentsGroup());
         	int coursesIndex = data.getCourses().indexOf(x.getCourse());
         	int roomsIndex = data.getRooms().indexOf(x.getRoom());
         	int instructorsIndex = data.getProfessors().indexOf(x.getProfessor());
         	int meetingTimeIndex = data.getMeetingTimes().indexOf(x.getMeetingTime());
         	System.out.print("                       ");
         	System.out.print(String.format("  %1$02d  ", classNumb) + "  | ");
-        	System.out.print(String.format("%1$4s", data.getDepts().get(majorIndex).getName()) + " | ");
+        	System.out.print(String.format("%1$4s", data.getStudentsGroups().get(majorIndex).getName()) + " | ");
             System.out.print(String.format("%1$21s", data.getCourses().get(coursesIndex).getName() +
             		                       " ("+data.getCourses().get(coursesIndex).getNumber()+", "+
             		                       x.getCourse().getMaxNumbOfStudents())+")             | ");
             System.out.print(String.format("%1$10s", data.getRooms().get(roomsIndex).getName() +
             		                       " ("+x.getRoom().getSeatingCapacity()) + ")     | ");
             System.out.print(String.format("%1$15s", data.getProfessors().get(instructorsIndex).getName()+")") + "  | ");
-            System.out.println(data.getMeetingTimes().get(meetingTimeIndex).getTime()+")");
-            classNumb++;
+			System.out.print(data.getMeetingTimes().get(meetingTimeIndex).getTime()+ " ");
+			System.out.println(data.getMeetingTimes().get(meetingTimeIndex).getDay()+ " ");
+			classNumb++;
         });
         if (schedule.getFitness() == 1) System.out.println("> Optimalni raspored je pronađen ");
         System.out.print("-----------------------------------------------------------------------------------");
