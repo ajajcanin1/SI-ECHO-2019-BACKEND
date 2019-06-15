@@ -1,6 +1,7 @@
 package com.example.echo.ga.v2;
 
 import com.example.echo.ga.v2.Domain.Class;
+import com.example.echo.ga.v2.Domain.StudentsGroup;
 
 import java.util.ArrayList;
 
@@ -11,92 +12,105 @@ public class Driver {
 	public static final double CROSSOVER_RATE = 0.9;
 	public static final int TOURNAMENT_SELECTION_SIZE = 3;
 	public static final int NUMB_OF_ELITE_SCHEDULES = 1;
-	private int scheduleNumb = 0;
-	private int classNumb = 1;
 	private Data data;
-	public void Start() {
+	public void Start(String semestar, String godina) {
 		Driver driver = new Driver();
 		driver.data = new Data();
+		driver.data.setGodina(godina);
+		driver.data.setSemestar(semestar);
 		int generationNumber = 0;
-		driver.printAvailableData();
-		System.out.println("> Generation # "+generationNumber);
-    	System.out.print("  Schedule # |                                           ");
-    	System.out.print("Classes [dept,class,room,instructor,meeting-time]       ");
-    	System.out.println( "                                  | Fitness | Conflicts");
-    	System.out.print("-----------------------------------------------------------------------------------");
-    	System.out.println("-------------------------------------------------------------------------------------");
-    	GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(driver.data);
-    	Population population = new Population(Driver.POPULATION_SIZE, driver.data).sortByFitness();
-    	population.getSchedules().forEach(schedule -> System.out.println("       "+driver.scheduleNumb++ +
-													                     "     | "+ schedule + " | " +
-													                     String.format("%.5f",schedule.getFitness()) +
-													                     " | "+schedule.getNumbOfConflicts()));
-    	driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
-    	driver.classNumb = 1;
-        while (population.getSchedules().get(0).getFitness() != 1.0) {
-        	System.out.println("> Generation # "+ ++generationNumber);
-        	System.out.print("  Schedule # |                                           ");
-        	System.out.print("Classes [dept,class,room,instructor,meeting-time]       ");
-        	System.out.println("                                  | Fitness | Conflicts");
-        	System.out.print("-----------------------------------------------------------------------------------");
-        	System.out.println("-------------------------------------------------------------------------------------");
-            population = geneticAlgorithm.evolve(population).sortByFitness();
-            driver.scheduleNumb = 0;
-            population.getSchedules().forEach(schedule -> System.out.println("       "+driver.scheduleNumb++ +
-														                     "     | "+ schedule + " | " +
-														                     String.format("%.5f",schedule.getFitness()) +
-														                     " | "+schedule.getNumbOfConflicts()));
-            driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
-            driver.classNumb = 1;
-        }
-
-
+		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(driver.data);
+		Population population = new Population(Driver.POPULATION_SIZE, driver.data).sortByFitness();
+		while(true) {
+			generationNumber++;
+			if(population.getSchedules().get(0).getFitness() != 1.0)
+				population = geneticAlgorithm.evolve(population).sortByFitness();
+			else {
+				driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
+				break;
+			}
+		}
 	}
 	private void printScheduleAsTable(Schedule schedule, int generation) {
-        ArrayList<Class> classes = schedule.getClasses();
-        System.out.print("\n                       ");
-        System.out.println("Redni broj | Grupa | Predmet (id, broj studenata) | Sala (Kapacitet) |   Profesor   |  Vrijeme ");
-        System.out.print("                       ");
-        System.out.print("------------------------------------------------------");
-        System.out.println("---------------------------------------------------------------");
-        classes.forEach(x -> {
-			int majorIndex = data.getStudentsGroups().indexOf(x.getStudentsGroup());
-        	int coursesIndex = data.getCourses().indexOf(x.getCourse());
-        	int roomsIndex = data.getRooms().indexOf(x.getRoom());
-        	int instructorsIndex = data.getProfessors().indexOf(x.getProfessor());
-        	int meetingTimeIndex = data.getMeetingTimes().indexOf(x.getMeetingTime());
-        	System.out.print("                       ");
-        	System.out.print(String.format("  %1$02d  ", classNumb) + "  | ");
-        	System.out.print(String.format("%1$4s", data.getStudentsGroups().get(majorIndex).getName()) + " | ");
-            System.out.print(String.format("%1$21s", data.getCourses().get(coursesIndex).getName() +
-            		                       " ("+data.getCourses().get(coursesIndex).getNumber()+", "+
-            		                       x.getCourse().getMaxNumbOfStudents())+")             | ");
-            System.out.print(String.format("%1$10s", data.getRooms().get(roomsIndex).getName() +
-            		                       " ("+x.getRoom().getSeatingCapacity()) + ")     | ");
-            System.out.print(String.format("%1$15s", data.getProfessors().get(instructorsIndex).getName()+")") + "  | ");
-			System.out.print(data.getMeetingTimes().get(meetingTimeIndex).getTime()+ " ");
-			System.out.println(data.getMeetingTimes().get(meetingTimeIndex).getDay()+ " ");
-			classNumb++;
-        });
-        if (schedule.getFitness() == 1) System.out.println("> Optimalni raspored je pronađen ");
-        System.out.print("-----------------------------------------------------------------------------------");
-    	System.out.println("-------------------------------------------------------------------------------------");
-    }
-	private void printAvailableData() {
-    	/*System.out.println("Available Departments ==>");
-    	data.getDepts().forEach(x-> System.out.println("name: "+x.getName()+", courses: "+x.getCourses()));
-    	System.out.println("\nAvailable Courses ==>");
-    	data.getCourses().forEach(x-> System.out.println("course #: "+x.getNumber()+", name: "+x.getName()+", max # of students: "
-    	                                                + x.getMaxNumbOfStudents()+", instructors: "+ x.getProfessors()));
-    	System.out.println("\nAvailable Rooms ==>");
-    	data.getRooms().forEach(x-> System.out.println("room #: "+x.getName()+", max seating capacity: "+x.getSeatingCapacity()));
-    	System.out.println("\nAvailable Instructors ==>");
-    	data.getProfessors().forEach(x-> System.out.println("id: "+x.getId()+", name: "+x.getName()));
-    	System.out.println("\nAvailable Meeting Times ==>");
-    	data.getMeetingTimes().forEach(x-> System.out.println("id: "+x.getId()+", Meeting Time: "+x.getTime()));
-    	System.out.print("-----------------------------------------------------------------------------------");
-    	System.out.println("-------------------------------------------------------------------------------------");
+		ArrayList<Class> classes = schedule.getClasses();
+		ArrayList<StudentsGroup> groups = data.getStudentsGroups();
 
-    	 */
-    }
+		//raspored po studentskim grupama
+		System.out.println("---------------------------------------------------------------");
+		groups.forEach(sg -> {
+			System.out.print("                     Grupa ");
+			System.out.print(String.format(sg.getName()));
+			if(sg.isLabGroup())
+				System.out.print(" - Vježbe ");
+			else
+				System.out.print((" - Predavanja "));
+			System.out.println("(" + sg.getNumberOfStudents() + " studenata)");
+			System.out.println("---------------------------------------------------------------");
+			sg.getCourses().forEach(course -> {
+				System.out.print("Predmet: ");
+				System.out.println(String.format(course.getName() +
+						" ("+course.getNumber()+")"));
+				System.out.print("Sala: ");
+				classes.forEach(c -> {
+					if(c.getStudentsGroup().getId() == sg.getId() && c.getCourse().getName() == course.getName()) {
+						System.out.println(String.format(c.getRoom().getName()));
+						if(c.getProfessor().isAssistent())
+							System.out.print("Asistent: ");
+						else
+							System.out.print("Profesor: ");
+						System.out.println(String.format(c.getProfessor().getName()));
+						System.out.print("Vrijeme: ");
+						System.out.print(printDay(c.getMeetingTime().getDay()) + " ");
+						System.out.println(c.getMeetingTime().getTime());
+					}
+				});
+				System.out.println("---------------------------------------------------------------");
+			});
+		});
+
+		//raspored po terminima
+		/*classes.forEach(x -> {
+			int majorIndex = data.getStudentsGroups().indexOf(x.getStudentsGroup());
+			int coursesIndex = data.getCourses().indexOf(x.getCourse());
+			int roomsIndex = data.getRooms().indexOf(x.getRoom());
+			int instructorsIndex = data.getProfessors().indexOf(x.getProfessor());
+			int meetingTimeIndex = data.getMeetingTimes().indexOf(x.getMeetingTime());
+			System.out.print("Grupa ");
+			System.out.print(String.format(data.getStudentsGroups().get(majorIndex).getName()));
+			if(x.getRoom().isLab())
+				System.out.print(" - Vježbe\n");
+
+			else
+				System.out.print(" - Predavanja\n");
+			System.out.println("Broj studenata: " + data.getStudentsGroups().get(majorIndex).getNumberOfStudents());
+			System.out.print("Predmet: ");
+			System.out.println(String.format(data.getCourses().get(coursesIndex).getName() +
+					" ("+data.getCourses().get(coursesIndex).getNumber()+")"));
+			System.out.print("Sala: ");
+			System.out.println(String.format(data.getRooms().get(roomsIndex).getName()));
+			if(x.getProfessor().isAssistent())
+				System.out.print("Asistent: ");
+			else
+				System.out.print("Profesor: ");
+			System.out.println(String.format(data.getProfessors().get(instructorsIndex).getName()));
+			System.out.print("Vrijeme: ");
+			System.out.print(data.getMeetingTimes().get(meetingTimeIndex).getDay() + " ");
+			System.out.println(data.getMeetingTimes().get(meetingTimeIndex).getTime());
+			System.out.println("---------------------------------------------------------------");
+		});*/
+		if (schedule.getFitness() == 1) System.out.println("> Optimalni raspored je pronađen ");
+		System.out.println("---------------------------------------------------------------");
+	}
+	private String printDay(String day) {
+		if(day == "PON")
+			return("Ponedjeljak");
+		else if(day == "UTO")
+			return("Utorak");
+		else if(day == "SRI")
+			return("Srijeda");
+		else if(day == "CET")
+			return("Četvrtak");
+		else
+			return("Petak");
+	}
 }
