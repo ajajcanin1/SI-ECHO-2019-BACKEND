@@ -65,6 +65,7 @@ public class Predmet {
     }
 
     @Basic
+    @JsonIgnore
     @Column(name = "opis")
     public String getOpis() {
         return opis;
@@ -101,6 +102,7 @@ public class Predmet {
         result = 31 * result + (opis != null ? opis.hashCode() : 0);
         return result;
     }
+    @JsonIgnore
     @OneToMany(mappedBy = "predmet")
     public List<GrupaTermina> getGrupe() {
         return grupe;

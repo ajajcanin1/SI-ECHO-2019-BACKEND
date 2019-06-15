@@ -2,6 +2,8 @@ package com.example.echo.Entity;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ZeljeniTermin {
     private int idZeljeniTermin;
@@ -20,7 +22,7 @@ public class ZeljeniTermin {
     public void setIdZeljeniTermin(int idZeljeniTermin) {
         this.idZeljeniTermin = idZeljeniTermin;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "idKabinet")
     public Integer getIdKabinet() {
@@ -50,7 +52,7 @@ public class ZeljeniTermin {
     public void setVrijeme(String vrijeme) {
         this.vrijeme = vrijeme;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "brCasova")
     public Integer getBrCasova() { return brCasova;}
