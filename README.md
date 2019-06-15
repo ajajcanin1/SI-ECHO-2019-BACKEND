@@ -1,5 +1,6 @@
 # SI-ECHO-2019-BACKEND
-Modul za generisanje i optimizaciju raspreda nastave
+# Modul za generisanje i optimizaciju raspreda nastave
+nedovršeno
 
 Za optimizaciju rasporeda koristio se genetički algoritam. Prilikom kreiranja rasporeda nastave, potrebno je u obzir uzeti sljedeće ograničenja: broj profesora, željenih termina odvijanja nastave, broj studenata, predavanja, sale, kapacitete sale, opremljenosti i namjene sala.
 Ova ograničenja se mogu podijeliti u nekoliko grupa prema njihovoj važnosti. 
