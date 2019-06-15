@@ -4,6 +4,12 @@ import com.example.echo.ga.v2.Domain.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.json.JSONArray;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Data {
 	private ArrayList<Room> rooms;
@@ -20,6 +26,69 @@ public class Data {
 	private  ArrayList<StudentsGroup> summerStudentsGroups;
 	private int numberOfClasses = 0;
 	public Data() { initialize(); }
+	public ArrayList<Professor> pozoviZaProfesore() throws Exception {
+		String url = "http://localhost:31905/si2019/echo/profesori/3";
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		System.out.println("Salje se zahtjev na link" + url);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputline;
+		StringBuffer response = new StringBuffer();
+		while ((inputline = in.readLine()) != null) {
+			response.append(inputline);
+		}
+		in.close();
+		System.out.println(response.toString());
+		JSONArray niz=new JSONArray(response.toString());	
+		ArrayList<Professor> listaProfesora=new ArrayList<Professor>();
+		for(int i=0; i<niz.length(); i++){
+			Integer id=niz.getJSONObject(i).getInt("id");
+			String name=niz.getJSONObject(i).getString("ime")+" "+ niz.getJSONObject(i).getString("prezime");
+			Professor novi= new Professor(id, name, true);
+			listaProfesora.add(novi);
+		}
+		System.out.println(response.length());
+		System.out.println(niz.length());
+		for(int i=0; i<listaProfesora.size(); i++){
+			System.out.println(listaProfesora.get(i).getId());
+			System.out.println(listaProfesora.get(i).getName());
+		}
+		return listaProfesora;
+	}
+	public ArrayList<MeetingTime> pozoviZaTermine() throws Exception {
+		String url = "http://localhost:31905/si2019/echo/all";
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		System.out.println("Salje se zahtjev na link" + url);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputline;
+		StringBuffer response = new StringBuffer();
+		while ((inputline = in.readLine()) != null) {
+			response.append(inputline);
+		}
+		in.close();
+		System.out.println(response.toString());
+		JSONArray niz=new JSONArray(response.toString());	
+		ArrayList<MeetingTime> listaTerminaa=new ArrayList<MeetingTime>();
+		for(int i=0; i<niz.length(); i++){
+			Integer id=niz.getJSONObject(i).getInt("idZeljeniTermin");
+			String day= niz.getJSONObject(i).getString("danUSedmici");
+			String time=niz.getJSONObject(i).getString("vrijeme");
+			Integer idProf=0;
+			try{
+				idProf=niz.getJSONObject(i).getInt("idPredavac");
+			}catch(Exception e){
+				idProf=0;
+			}
+			MeetingTime novi= new MeetingTime(id,day, time, idProf);
+			listaTerminaa.add(novi);
+		}
+		System.out.println(response.length());
+		System.out.println(niz.length());
+		return listaTerminaa;
+	}
 	private Data initialize() {
 
 		//uzimati iz baze - Kabineti
@@ -222,7 +291,16 @@ public class Data {
 				meetingTime19, meetingTime20, meetingTime21, meetingTime22, meetingTime23, meetingTime24, meetingTime25, meetingTime26, meetingTime27, meetingTime28,
 				meetingTime29, meetingTime30, meetingTime31, meetingTime32, meetingTime61, meetingTime62, meetingTime63, meetingTime64));
 
-
+				try {
+					ArrayList<MeetingTime> l= pozoviZaTermine();
+					} catch (Exception e) {
+					e.printStackTrace();
+					}
+				try {
+						ArrayList<Professor> listaP=pozoviZaProfesore();
+				} catch (Exception e) {
+						e.printStackTrace();
+					}
 		//uzimati iz baze - Predmeti
 		//ZIMSKI
 		//5. semestar ri
