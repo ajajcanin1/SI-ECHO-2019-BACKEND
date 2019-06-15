@@ -26,6 +26,7 @@ public class Data {
 	private  ArrayList<StudentsGroup> summerStudentsGroups;
 	private int numberOfClasses = 0;
 	public Data() { initialize(); }
+	//vraca profesore
 	public ArrayList<Professor> pozoviZaProfesore() throws Exception {
 		String url = "http://localhost:31905/si2019/echo/profesori/3";
 		URL obj = new URL(url);
@@ -56,6 +57,7 @@ public class Data {
 		}
 		return listaProfesora;
 	}
+	//vraca termine
 	public ArrayList<MeetingTime> pozoviZaTermine() throws Exception {
 		String url = "http://localhost:31905/si2019/echo/all";
 		URL obj = new URL(url);
@@ -89,8 +91,72 @@ public class Data {
 		System.out.println(niz.length());
 		return listaTerminaa;
 	}
+	//vraca kabinete
+	public ArrayList<Room> pozoviKabinete() throws Exception {
+		String url = "http://localhost:31905/si2019/echo/kabineti";
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		System.out.println("Salje se zahtjev na link" + url);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputline;
+		StringBuffer response = new StringBuffer();
+		while ((inputline = in.readLine()) != null) {
+			response.append(inputline);
+		}
+		in.close();
+		//System.out.println(response.toString());
+		JSONArray niz=new JSONArray(response.toString());	
+		ArrayList<Room> listakabineta=new ArrayList<Room>();
+		for(int i=0; i<niz.length(); i++){
+			String naziv=niz.getJSONObject(i).getString("naziv");
+			Integer kapacitet=niz.getJSONObject(i).getInt("kapacitet");
+			Boolean namjena = niz.getJSONObject(i).getBoolean("namjena");
+			Room novi= new Room(naziv, kapacitet, namjena);
+			listakabineta.add(novi);
+		}
+		//System.out.println(response.length());
+		//System.out.println(niz.length());
+		return listakabineta;
+	}
+	//vraca predmete
+	public ArrayList<Course> pozoviPredmete() throws Exception {
+		String url = "http://localhost:31905/si2019/echo/predmeti";
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		System.out.println("Salje se zahtjev na link" + url);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputline;
+		StringBuffer response = new StringBuffer();
+		while ((inputline = in.readLine()) != null) {
+			response.append(inputline);
+		}
+		in.close();
+		//System.out.println(response.toString());
+		JSONArray niz=new JSONArray(response.toString());	
+		ArrayList<Course> listapredmeta=new ArrayList<Course>();
+		for(int i=0; i<niz.length(); i++){
+			Integer id = niz.getJSONObject(i).getInt("id");
+			String ideic = String.valueOf(id);
+			String naziv=niz.getJSONObject(i).getString("naziv");
+			Professor professor1 = new Professor(1, "Novica Nosovic", true);
+			ArrayList<Professor> lista = new ArrayList<Professor>(Arrays.asList(professor1));
+			Course novi= new Course(ideic, naziv, lista, 150);
+			listapredmeta.add(novi);
+		}
+		//System.out.println(response.length());
+		//System.out.println(niz.length());
+		return listapredmeta;
+	}
 	private Data initialize() {
 
+		try{
+			ArrayList<Room> nova = pozoviKabinete();
+			ArrayList<Course> novi = pozoviPredmete();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		//uzimati iz baze - Kabineti
 		Room room1 = new Room("VA",300, false);
 		Room room2 = new Room("MA",200, false);

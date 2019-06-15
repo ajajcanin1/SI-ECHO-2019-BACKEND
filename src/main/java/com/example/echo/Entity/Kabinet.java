@@ -73,7 +73,7 @@ public class Kabinet {
         result = 31 * result + (naziv != null ? naziv.hashCode() : 0);
         return result;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "kabinet")
     public List<Raspored> getTermini() {
         return termini;
@@ -82,6 +82,7 @@ public class Kabinet {
     public void setTermini(List<Raspored> termini) {
         this.termini = termini;
     }
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "predmet_kabinet", catalog = "", schema = "TYQcLL35gV", joinColumns = @JoinColumn(name = "idKabinet", referencedColumnName = "idKabinet"), inverseJoinColumns = @JoinColumn(name = "idPredmet", referencedColumnName = "id"))
     public List<Predmet> getPredmeti() {
