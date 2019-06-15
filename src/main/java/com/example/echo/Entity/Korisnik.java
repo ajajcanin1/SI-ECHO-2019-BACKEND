@@ -65,7 +65,7 @@ public class Korisnik {
     public void setPrezime(String prezime) {
         this.prezime = prezime;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "datumRodjenja")
     public Date getDatumRodjenja() {
@@ -75,7 +75,7 @@ public class Korisnik {
     public void setDatumRodjenja(Date datumRodjenja) {
         this.datumRodjenja = datumRodjenja;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "JMBG")
     public String getJmbg() {
@@ -85,7 +85,7 @@ public class Korisnik {
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "email")
     public String getEmail() {
@@ -95,7 +95,7 @@ public class Korisnik {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "mjestoRodjenja")
     public String getMjestoRodjenja() {
@@ -105,7 +105,7 @@ public class Korisnik {
     public void setMjestoRodjenja(String mjestoRodjenja) {
         this.mjestoRodjenja = mjestoRodjenja;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "kanton")
     public String getKanton() {
@@ -115,7 +115,7 @@ public class Korisnik {
     public void setKanton(String kanton) {
         this.kanton = kanton;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "drzavljanstvo")
     public String getDrzavljanstvo() {
@@ -125,7 +125,7 @@ public class Korisnik {
     public void setDrzavljanstvo(String drzavljanstvo) {
         this.drzavljanstvo = drzavljanstvo;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "telefon")
     public String getTelefon() {
@@ -135,7 +135,7 @@ public class Korisnik {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "spol")
     public Boolean getSpol() {
@@ -145,7 +145,7 @@ public class Korisnik {
     public void setSpol(Boolean spol) {
         this.spol = spol;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "imePrezimeMajke")
     public String getImePrezimeMajke() {
@@ -155,7 +155,7 @@ public class Korisnik {
     public void setImePrezimeMajke(String imePrezimeMajke) {
         this.imePrezimeMajke = imePrezimeMajke;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "imePrezimeOca")
     public String getImePrezimeOca() {
@@ -165,7 +165,7 @@ public class Korisnik {
     public void setImePrezimeOca(String imePrezimeOca) {
         this.imePrezimeOca = imePrezimeOca;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "adresa")
     public String getAdresa() {
@@ -175,7 +175,7 @@ public class Korisnik {
     public void setAdresa(String adresa) {
         this.adresa = adresa;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "username")
     public String getUsername() {
@@ -185,7 +185,7 @@ public class Korisnik {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "password")
     public String getPassword() {
@@ -195,7 +195,7 @@ public class Korisnik {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "linkedin")
     public String getLinkedin() {
@@ -205,7 +205,7 @@ public class Korisnik {
     public void setLinkedin(String linkedin) {
         this.linkedin = linkedin;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "website")
     public String getWebsite() {
@@ -215,7 +215,7 @@ public class Korisnik {
     public void setWebsite(String website) {
         this.website = website;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "fotografija")
     public byte[] getFotografija() {
@@ -225,7 +225,7 @@ public class Korisnik {
     public void setFotografija(byte[] fotografija) {
         this.fotografija = fotografija;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "indeks")
     public String getIndeks() {
@@ -235,7 +235,7 @@ public class Korisnik {
     public void setIndeks(String indeks) {
         this.indeks = indeks;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "ciklus")
     public String getCiklus() {
@@ -245,7 +245,7 @@ public class Korisnik {
     public void setCiklus(String ciklus) {
         this.ciklus = ciklus;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "semestar")
     public String getSemestar() {
@@ -255,7 +255,7 @@ public class Korisnik {
     public void setSemestar(String semestar) {
         this.semestar = semestar;
     }
-
+    @JsonIgnore
     @Basic
     @Column(name = "titula")
     public String getTitula() {
@@ -332,7 +332,7 @@ public class Korisnik {
         result = 31 * result + (titula != null ? titula.hashCode() : 0);
         return result;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "predavac")
     public List<GrupaTermina> getGrupe() {
         return grupe;
@@ -341,7 +341,7 @@ public class Korisnik {
     public void setGrupe(List<GrupaTermina> grupe) {
         this.grupe = grupe;
     }
-
+    @JsonIgnore
     @OneToMany(mappedBy = "predavac")
     public List<ZeljeniTermin> getZeljeniTermini() {
         return zeljeniTermini;
