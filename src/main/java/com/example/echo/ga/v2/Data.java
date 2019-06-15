@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 public class Data {
 	private ArrayList<Room> rooms;
+	private String semestar;
+	private String godina;
 	private ArrayList<Professor> winterProfessors;
 	private ArrayList<Professor> summerProfessors;
 	private ArrayList<Course> winterCourses;
@@ -14,7 +16,8 @@ public class Data {
 	private ArrayList<Department> depts;
 	private ArrayList<MeetingTime> summerMeetingTimes;
 	private ArrayList<MeetingTime> winterMeetingTimes;
-	private  ArrayList<StudentsGroup> studentsGroups;
+	private  ArrayList<StudentsGroup> winterStudentsGroups;
+	private  ArrayList<StudentsGroup> summerStudentsGroups;
 	private int numberOfClasses = 0;
 	public Data() { initialize(); }
 	private Data initialize() {
@@ -91,12 +94,12 @@ public class Data {
 
 		winterProfessors = new ArrayList<Professor>(Arrays.asList(professor1,professor2,professor3,professor4,professor5,professor6,
 				professor7,professor8,professor9,professor10,professor11,professor13));
+
 		summerProfessors = new ArrayList<Professor>(Arrays.asList(professor12, professor23, professor24,
 				professor26, professor28, professor29, professor30, professor31, professor32));
 
 		//uzimati iz baze - ZeljeniTermini
 		//RI-zimski semestar zeljeni termini
-
 		//Profesori
 		MeetingTime meetingTime33 = new MeetingTime(33, "PON","09:00 - 12:00", 1);
 		MeetingTime meetingTime34= new MeetingTime(34, "UTO","09:00 - 12:00", 1);
@@ -127,6 +130,7 @@ public class Data {
 		MeetingTime meetingTime54= new MeetingTime(54, "UTO","11:00 - 14:00", 6);
 		MeetingTime meetingTime55 = new MeetingTime(55, "PON","12:00 - 15:00", 6);
 		MeetingTime meetingTime56 = new MeetingTime(56, "PET","09:00 - 12:00", 6);
+
 		//Asistenti
 		MeetingTime meetingTime57 = new MeetingTime(57, "PON","09:00 - 10:00", 7);
 		MeetingTime meetingTime58= new MeetingTime(58, "SRI","10:00 - 11:00", 7);
@@ -213,7 +217,7 @@ public class Data {
 		MeetingTime meetingTime64 = new MeetingTime(64, "CET","09:00 - 12:00", 12);
 
 
-		summerMeetingTimes= new ArrayList<MeetingTime>(Arrays.asList(meetingTime1, meetingTime2, meetingTime3, meetingTime4, meetingTime5, meetingTime6, meetingTime7, meetingTime8,
+		summerMeetingTimes = new ArrayList<MeetingTime>(Arrays.asList(meetingTime1, meetingTime2, meetingTime3, meetingTime4, meetingTime5, meetingTime6, meetingTime7, meetingTime8,
 				meetingTime9, meetingTime10, meetingTime11, meetingTime12, meetingTime13, meetingTime14, meetingTime15, meetingTime16, meetingTime17, meetingTime18,
 				meetingTime19, meetingTime20, meetingTime21, meetingTime22, meetingTime23, meetingTime24, meetingTime25, meetingTime26, meetingTime27, meetingTime28,
 				meetingTime29, meetingTime30, meetingTime31, meetingTime32, meetingTime61, meetingTime62, meetingTime63, meetingTime64));
@@ -235,7 +239,7 @@ public class Data {
 		Course course34 = new Course("PIS", "Projektovanje informacionih sistema", new ArrayList<Professor>(Arrays.asList(professor23, professor29, professor28)), 100);
 		Course course35 = new Course("VI", "Vještačka inteligencija", new ArrayList<Professor>(Arrays.asList(professor24, professor30)), 100);
 
-		Course course37 = new Course("ARM", "Administracija raČunarskih mreŽa", new ArrayList<Professor>(Arrays.asList(professor26, professor31)), 100);
+		Course course37 = new Course("ARM", "Administracija računarskih mreža", new ArrayList<Professor>(Arrays.asList(professor26, professor31)), 100);
 
 		summerCourses = new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37));
 
@@ -256,22 +260,49 @@ public class Data {
 		StudentsGroup group22 = new StudentsGroup(22, "L3", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
 		StudentsGroup group23 = new StudentsGroup(23, "L4", 25, true, new ArrayList<Course>(Arrays.asList(course33, course34, course35, course37)));
 
-		studentsGroups = new ArrayList<StudentsGroup>(Arrays.asList(group1, group2, group3, group4, group5));
+		winterStudentsGroups = new ArrayList<StudentsGroup>(Arrays.asList(group1, group2, group3, group4, group5));
+		summerStudentsGroups = new ArrayList<StudentsGroup>(Arrays.asList(group19, group20, group21, group22, group23));
 
 		//Odsjeci
-		Department dept = new Department("RI3", new ArrayList<Course>(Arrays.asList(course1, course2, course3, course4, course5, course6)));
+		Department dept1 = new Department("RI3 - Zimski",new ArrayList<Course>(Arrays.asList(course1,course2,course3,course4,course5,course6)));
+		Department dept2 = new Department("RI3 - Ljetni", new ArrayList<Course>(summerCourses));
 
-		depts = new ArrayList<Department>(Arrays.asList(dept));
+		depts = new ArrayList<Department>(Arrays.asList(dept1));
 		depts.forEach(x -> numberOfClasses += x.getCourses().size());
-
 
 		return this;
 	}
+
+	public void setSemestar(String semestar) { this.semestar = semestar; }
+	public void setGodina(String godina) { this.godina = godina; }
+	public String getSemestar() { return semestar; }
+	public String getGodina() { return godina; }
+
 	public ArrayList<Room> getRooms() { return rooms; }
-	public ArrayList<Professor> getProfessors() { return winterProfessors; }
-	public ArrayList<Course> getCourses() { return winterCourses; }
+	public ArrayList<Professor> getProfessors() {
+		if(semestar.equals("zimski"))
+			return winterProfessors;
+		else
+			return summerProfessors;
+	}
+	public ArrayList<Course> getCourses() {
+		if(semestar.equals("zimski"))
+			return winterCourses;
+		else
+			return summerCourses;
+		}
 	public ArrayList<Department> getDepts() { return depts; }
-	public ArrayList<MeetingTime> getMeetingTimes() { return winterMeetingTimes; }
-	public ArrayList<StudentsGroup> getStudentsGroups() { return studentsGroups; }
+	public ArrayList<MeetingTime> getMeetingTimes() {
+		if(semestar.equals("zimski"))
+			return winterMeetingTimes;
+		else
+			return summerMeetingTimes;
+	}
+	public ArrayList<StudentsGroup> getStudentsGroups() {
+		if(semestar.equals("zimski"))
+			return winterStudentsGroups;
+		else
+			return summerStudentsGroups;
+	}
 	public int getNumberOfClasses() { return this.numberOfClasses; }
 }
