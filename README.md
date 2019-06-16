@@ -14,4 +14,4 @@ Ova ograničenja se mogu podijeliti u nekoliko grupa prema njihovoj važnosti.
       - Željeni termini nastavnog osoblja,
       - ravnomjerna distribucija nastave tokom radne sedmice
      
-Kao primjer izvršavanja algoritma kreira se raspored nastave za zimski/ljetni semestar treće godine Elektrotehničkog fakultet, odsjek Računarstvo i informatika. 
+Kao primjer izvršavanja algoritma kreira se raspored nastave za zimski/ljetni semestar treće godine Elektrotehničkog fakulteta, odsjek Računarstvo i informatika. 
