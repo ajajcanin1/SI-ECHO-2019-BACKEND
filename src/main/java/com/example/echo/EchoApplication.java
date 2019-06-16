@@ -14,7 +14,7 @@ public class EchoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EchoApplication.class, args);
 	}
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer(){
 		return new WebMvcConfigurer(){
 			@Override
@@ -22,5 +22,5 @@ public class EchoApplication {
 				registry.addMapping("/**").allowedOrigins("http://localhost:3000");
 			}
 		};
-	}
+	}*/
 }
