@@ -32,7 +32,7 @@ public class KorisnikController {
             @ApiResponse(code = 400, message="The request was invalid or cannot be otherwise served."),
     })
     @CrossOrigin()
-    @RequestMapping(value = "/getTeachingStaff",  method = RequestMethod.GET)
+    @RequestMapping(value = "/getTeachingStaff",  method = RequestMethod.POST)
     public ResponseEntity getTeachingStaff(@RequestBody String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.readTree(data);
