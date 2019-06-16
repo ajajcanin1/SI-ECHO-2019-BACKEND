@@ -29,7 +29,8 @@ import java.util.ArrayList;
 
 public class APIDohvatiTerminePoDanuTest {
     public Boolean pozoviZaTerminePoDanu() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/terminpodanu/Pon";
+		//String url = "http://localhost:31905/si2019/echo/terminpodanu/Pon";
+		String url = "https://si-echo-2019.herokuapp.com/api/si2019/echo/terminpodanu/Pon";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
