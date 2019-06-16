@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class APIkabinetipokapacitetuTest {
     public Boolean pozovi() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/kabinetikapacitet/1";
+		String url = "https://si-echo-2019.herokuapp.com/si2019/echo/kabinetikapacitet/1";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");

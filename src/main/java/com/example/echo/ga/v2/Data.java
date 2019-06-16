@@ -93,11 +93,11 @@ public class Data {
 	}
 	//vraca kabinete
 	public ArrayList<Room> pozoviKabinete() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/kabineti";
+		String url = "https://si-echo-2019.herokuapp.com/si2019/echo/kabineti";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
-		System.out.println("Salje se zahtjev na link" + url);
+		//System.out.println("Salje se zahtjev na link" + url);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputline;
 		StringBuffer response = new StringBuffer();
@@ -121,11 +121,11 @@ public class Data {
 	}
 	//vraca predmete
 	public ArrayList<Course> pozoviPredmete() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/predmeti";
+		String url = "https://si-echo-2019.herokuapp.com/si2019/echo/predmeti";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
-		System.out.println("Salje se zahtjev na link" + url);
+		//System.out.println("Salje se zahtjev na link" + url);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputline;
 		StringBuffer response = new StringBuffer();
@@ -150,13 +150,6 @@ public class Data {
 		return listapredmeta;
 	}
 	private Data initialize() {
-
-		try{
-			ArrayList<Room> nova = pozoviKabinete();
-			ArrayList<Course> novi = pozoviPredmete();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 		//uzimati iz baze - Kabineti
 		Room room1 = new Room("VA",300, false);
 		Room room2 = new Room("MA",200, false);
