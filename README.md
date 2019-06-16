@@ -6,7 +6,7 @@ Ova ograničenja se mogu podijeliti u nekoliko grupa prema njihovoj važnosti.
   1. Jaka ograničenja - ako ograničenje nije zadovoljeno, raspored se neće moći kreirati,
       - Profesor mora imati minimalan broj unesenih željenih termina za održavanje nastave, 
       - Profesor i studentska grupa se ne mogu dodijeliti na dva ili više različitih predavanja istovremeno,
-      - Mora postojati dovoljan broj sala 
+      - Mora postojati dovoljan broj sala,
       - Sala mora imati dovoljan kapacitet da bi primila sve studenta,
       - Sala mora imati odgovarajuću opremu za održavaje nastave
 
