@@ -1,6 +1,7 @@
 package com.example.echo.ga.v2;
 
 import com.example.echo.ga.v2.Domain.Class;
+import com.example.echo.ga.v2.Domain.Course;
 import com.example.echo.ga.v2.Domain.StudentsGroup;
 
 import java.util.ArrayList;
@@ -13,11 +14,12 @@ public class Driver {
 	public static final int TOURNAMENT_SELECTION_SIZE = 3;
 	public static final int NUMB_OF_ELITE_SCHEDULES = 1;
 	private Data data;
-	public void Start(String semestar, String godina) {
+	public String Start(String semestar, String godina) {
 		Driver driver = new Driver();
 		driver.data = new Data();
 		driver.data.setGodina(godina);
 		driver.data.setSemestar(semestar);
+		String dataString = "";
 		int generationNumber = 0;
 		GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(driver.data);
 		Population population = new Population(Driver.POPULATION_SIZE, driver.data).sortByFitness();
@@ -26,10 +28,13 @@ public class Driver {
 			if(population.getSchedules().get(0).getFitness() != 1.0)
 				population = geneticAlgorithm.evolve(population).sortByFitness();
 			else {
-				driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
+				//driver.printScheduleAsTable(population.getSchedules().get(0), generationNumber);
+				dataString = dataString.concat(driver.saveScheduleAsString(population.getSchedules().get(0), generationNumber));
 				break;
 			}
 		}
+		System.out.print(dataString);
+		return dataString;
 	}
 	private void printScheduleAsTable(Schedule schedule, int generation) {
 		ArrayList<Class> classes = schedule.getClasses();
@@ -100,6 +105,50 @@ public class Driver {
 		});*/
 		if (schedule.getFitness() == 1) System.out.println("> Optimalni raspored je pronađen ");
 		System.out.println("---------------------------------------------------------------");
+	}
+
+	private String saveScheduleAsString(Schedule schedule, int generation) {
+
+		ArrayList<Class> classes = schedule.getClasses();
+		ArrayList<StudentsGroup> groups = data.getStudentsGroups();
+		String dataString = "";
+		//raspored po studentskim grupama
+		dataString = dataString.concat("---------------------------------------------------------------\n");
+		for(StudentsGroup sg : groups) {
+			dataString = dataString.concat("                     Grupa ");
+			dataString = dataString.concat(String.format(sg.getName()));
+			if (sg.isLabGroup())
+				dataString = dataString.concat(" - Vježbe ");
+			else
+				dataString = dataString.concat((" - Predavanja "));
+			dataString = dataString.concat("(" + sg.getNumberOfStudents() + " studenata)\n");
+			dataString = dataString.concat("---------------------------------------------------------------\n");
+
+			for(Course course : sg.getCourses()) {
+				dataString = dataString.concat("Predmet: ");
+				dataString = dataString.concat(String.format(course.getName() +
+						" (" + course.getNumber() + ")\n"));
+				dataString = dataString.concat("Sala: ");
+				for(Class c : classes) {
+					if (c.getStudentsGroup().getId() == sg.getId() && c.getCourse().getName() == course.getName()) {
+						dataString = dataString.concat(String.format(c.getRoom().getName()) + "\n");
+						if (c.getProfessor().isAssistent())
+							dataString = dataString.concat("Asistent: ");
+						else
+							dataString = dataString.concat("Profesor: ");
+						dataString = dataString.concat(String.format(c.getProfessor().getName()) + "\n");
+						dataString = dataString.concat("Vrijeme: ");
+						dataString = dataString.concat(printDay(c.getMeetingTime().getDay()) + " ");
+						dataString = dataString.concat(c.getMeetingTime().getTime()+ "\n");
+					}
+				}
+				dataString = dataString.concat("---------------------------------------------------------------\n");
+			}
+		};
+		if (schedule.getFitness() == 1) dataString = dataString.concat("> Optimalni raspored je pronađen \n");
+
+		dataString = dataString.concat("---------------------------------------------------------------\n");
+		return dataString;
 	}
 	private String printDay(String day) {
 		if(day == "PON")
