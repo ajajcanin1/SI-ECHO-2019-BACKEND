@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 @RequestMapping(value="api/si2019/echo")
 public class KorisnikController {
@@ -31,7 +31,7 @@ public class KorisnikController {
             @ApiResponse(code = 200, message="Successfully retrieved list"),
             @ApiResponse(code = 400, message="The request was invalid or cannot be otherwise served."),
     })
-    @CrossOrigin
+    @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
     @RequestMapping(value = "/getTeachingStaff",  method = RequestMethod.GET)
     public ResponseEntity getTeachingStaff(@RequestBody String data) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
