@@ -17,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/si2019/echo")
+@RequestMapping(value="api/si2019/echo")
 public class ZeljeniTerminKontroler {
     //private ZeljeniTerminRepository zeljeniTerminRepository;
 

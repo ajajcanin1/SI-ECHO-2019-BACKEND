@@ -14,13 +14,12 @@ public class EchoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EchoApplication.class, args);
 	}
-
 	@Bean
 	public WebMvcConfigurer corsConfigurer(){
-		return new WebMvcConfigurer() {
+		return new WebMvcConfigurer(){
 			@Override
 			public void addCorsMappings(CorsRegistry registry){
-				registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/**");
 			}
 		};
 	}

@@ -29,7 +29,8 @@ import java.util.ArrayList;
 
 public class APIDohvatiTerminePoKabinetuTest {
     public Boolean pozoviZaTerminePoKabinetu() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/terminpokabinetu/3";
+		//String url = "http://localhost:31905/si2019/echo/terminpokabinetu/3";
+		String url = "https://si-echo-2019.herokuapp.com/api/si2019/echo/terminpokabinetu/3";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");

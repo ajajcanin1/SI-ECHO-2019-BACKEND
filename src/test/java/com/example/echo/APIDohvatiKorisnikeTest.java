@@ -29,7 +29,8 @@ import java.util.ArrayList;
 
 public class APIDohvatiKorisnikeTest {
     public Boolean pozoviZaKorisnike() throws Exception {
-		String url = "http://localhost:31905/si2019/echo/korisnici";
+		//String url = "http://localhost:31905/si2019/echo/korisnici";
+		String url = "https://si-echo-2019.herokuapp.com/si2019/echo/korisnici";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");

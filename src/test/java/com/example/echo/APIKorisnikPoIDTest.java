@@ -22,7 +22,8 @@ import java.net.URL;
 
 public class APIKorisnikPoIDTest {
     public Boolean pozoviZaKorisnikePoId() throws Exception {
-        String url = "http://localhost:31905/si2019/echo/korisnici/5";
+        //String url = "http://localhost:31905/si2019/echo/korisnici/5";
+        String url = "https://si-echo-2019.herokuapp.com/si2019/echo/korisnici/5";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
